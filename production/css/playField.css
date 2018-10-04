@@ -1,0 +1,46 @@
+/* PLAY-FIELD */
+
+.sapper__play-field {
+  position: relative;
+  padding-top: 50px;
+  width: 100%;
+  height: 100vh;
+  background-color: #9D69D6;
+}
+
+.play-field {
+  margin: auto;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  border: 3px solid #8942D6;
+  border-radius: 10px;
+}
+
+.cell {
+  position: relative;
+  margin-right: 2px;
+  margin-bottom: 2px;
+  width: 25px;
+  height: 25px;
+  background-color: #5A0DAC;
+}
+
+.cell p {
+  margin: 0px;
+  padding: 0px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 25px;
+}
+
+.cell img {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  z-index: 1;
+}

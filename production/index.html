@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Aleksanov's Sapper</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/startModal.css">
+  <link rel="stylesheet" href="css/sapper.css">
+  <link rel="stylesheet" href="css/playField.css">
+
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="start-modal">
+    <div class="start-modal__header">
+      <img src="img/smiling.png" alt="smile">
+      <h1></h1>
+      <img src="img/with_tongue.png" alt="smile">
+    </div>
+
+    <div class="start-modal__inputs">
+      <p>Имя:</p>
+      <input type="text">
+      <p>Количество бомб:</p>
+      <input type="number">
+    </div>
+
+    <div class="start-modal__buttons">
+      <div class="start btn">
+        Поехали!
+      </div>
+    </div>
+  </div>
+
+  <div class="sapper">
+    <!-- <div class="sapper__header">
+      <div class="sapper__header-time">
+        <p class="time">
+          <span class="time__minutes">00</span>
+          :
+          <span class="time__seconds">00</span>
+        </p>
+      </div>
+      <div class="sapper__header-smile">
+        <img src="img/smiling.png" alt="Smiling">
+      </div>
+      <div class="sapper__header-bombs-left">
+        <p class="bombs-left">0</p>
+      </div>
+    </div> -->
+
+    <div class="sapper__play-field">
+      <div class="play-field">
+
+      </div>
+    </div>
+
+    <!-- <div class="sapper__footer">
+      <div class="sapper__footer-copyright">
+        <p>Sapper 2018 &#169; | Created by Aleksanov Roman</p>
+      </div>
+    </div> -->
+  </div>
+
+  <script src="js/gameController.js"></script>
+  <script src="js/otherFunctions.js"></script>
+  <script src="js/playField.js"></script>
+  <script src="js/check.js"></script>
+  <script src="js/buttonsController.js"></script>
+  <script src="js/modals.js"></script>
+  <script src="js/start.js"></script>
+</body>
+</html>

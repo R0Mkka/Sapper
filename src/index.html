@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Aleksanov's Sapper</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="backdrop"></div>
+
+  <div class="modal-start">
+    <div class="modal-start__header">
+      <img src="img/smiling.png" alt="smile">
+      <h1>Начало игры!</h1>
+      <img src="img/with_tongue.png" alt="smile">
+    </div>
+    <div class="modal-start__input">
+      <p>Введите ваше имя: </p>
+      <input type="text">
+      <p>Введите количество бомб: </p>
+      <input type="number" name="" value="">
+    </div>
+    <div class="modal-start__start-btn">
+      <div class="start btn">Поехали!</div>
+    </div>
+  </div>
+
+  <div class="modal-end">
+    <div class="modal-end__header">
+      <img src="img/demon.png" alt="demon">
+      <h1>Бууум!</h1>
+      <img src="img/demon.png" alt="demon">
+    </div>
+
+    <div class="modal-end__text">
+      <p>Ничего :)</p>
+      <p>В следующий раз все получится!</p>
+    </div>
+
+    <div class="modal-end__buttons">
+      <div class="restart-button btn">
+        <p>Начать заново</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-win">
+    <div class="modal-win__header">
+      <img src="img/with_tongue.png" alt="demon">
+      <h1>Победа!!!</h1>
+      <img src="img/with_tongue.png" alt="demon">
+    </div>
+
+    <div class="modal-win__text">
+      <p>Отлично! :)</p>
+      <p>Это было нелегко, но ты справился!</p>
+    </div>
+
+    <div class="modal-win__buttons">
+      <div class="restart-button btn">
+        <p>Начать заново</p>
+      </div>
+      <div class="save-button btn">
+        <p>Сохранить результат</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sapper">
+    <div class="window">
+      <div class="window__header">
+        <div class="window__header-time">
+          <p class="time">
+            <span class="time__minutes">00</span>
+            :
+            <span class="time__seconds">00</span>
+          </p>
+        </div>
+        <div class="window__header-smile">
+          <img src="img/smiling.png" alt="Smiling">
+        </div>
+        <div class="window__header-bombs-left">
+          <p class="bombs-left">0</p>
+        </div>
+      </div>
+      <div class="window__play-field">
+        <div class="play-field">
+
+        </div>
+      </div>
+      <div class="window__footer">
+        <div class="window__footer-copyright">
+          <p>Sapper 2018 &#169; | Created by Aleksanov Roman</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <script src="OpenCells.js"></script> -->
+  <script src="js/script.js"></script>
+</body>
+</html>

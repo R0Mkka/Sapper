@@ -1,177 +1,140 @@
 class GameController {
 
-  cellClick(playField) {
-    self = this;
+  cellLeftClick(playField) {
+    let listener = {
+      on: 'click',
+      callback: (event) => {
+        let target = event.target;
 
-    playField.field.addEventListener('click', function(event) {
-      let target = event.target;
+        if (target.classList.contains('cell')) {
+          if (target.classList.contains('bomb')) {
+            target.innerHTML = `<img src='img/bomb.png'>`;
+            target.style.backgroundColor = 'red';
 
-      if (target.classList.contains('cell')) {
-        if (target.classList.contains('bomb')) {
-          target.innerHTML = `<img src='img/bomb.png'>`;
-          target.style.backgroundColor = 'red';
-        } else {
-          target.style.backgroundColor = 'teal';
-          target.classList.add('clicked');
+            playField.open();
+            this.gameOver(playField);
+          } else {
+            target.style.backgroundColor = 'teal';
+            target.classList.add('clicked');
 
-          self.openCells(playField);
-        }
-      }
-    });
-  }
+            let algorithm = new Algorithm();
+            algorithm.openCells(playField);
 
-  openCells(playField) {
-    let rows = playField.rows,
-        columns = playField.columns,
-        positions = playField.positions;
-
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < columns; j++) {
-        if (positions[i][j].classList.contains('clicked')) {
-          positions[i][j].classList.remove('clicked');
-
-          this.openLeftCell(i, j - 1, positions, rows, columns);
-          this.openRightCell(i, j + 1, positions, rows, columns);
-          this.openUpperCell(i - 1, j, positions, rows, columns);
-          this.openLowerCell(i + 1, j, positions, rows, columns);
-        }
-      }
-    }
-  }
-
-  openLeftCell(i, j, positions, rows, columns) {
-    if ( i >= 0 && j >= 0 && i < rows && j < columns ) {
-      if (this.isClosed(positions[i][j])) {
-        positions[i][j].classList.remove('closed');
-
-        if (this.isBomb(positions[i][j]) || this.isFlagged(positions[i][j])) {
-          positions[i][j].classList.add('closed');
-
-          this.setBombsNumber(i, j + 1, positions, rows, columns);
-        } else {
-          positions[i][j].style.backgroundColor = 'teal';
-
-          if (this.setBombsNumber(i, j + 1, positions, rows, columns) > 0) {
-            this.openUpperCell(i - 1, j, positions, rows, columns);
-            this.openLowerCell(i + 1, j, positions, rows, columns);
-            return;
+            this.checkForWin(playField);
           }
-
-          this.openUpperCell(i - 1, j, positions, rows, columns);
-          this.openLowerCell(i + 1, j, positions, rows, columns);
-          this.openLeftCell(i, j - 1, positions, rows, columns);
         }
-
       }
     }
+
+    playField.clickListener = listener;
+    playField.field.addEventListener(listener.on, listener.callback);
   }
 
-  openRightCell(i, j, positions, rows, columns) {
-    if ( i >= 0 && j >= 0 && i < rows && j < columns ) {
-      if (this.isClosed(positions[i][j])) {
-        positions[i][j].classList.remove('closed');
+  cellRightClick(playField) {
+    let listener = {
+      on: 'contextmenu',
+      callback: (event) => {
+        event.preventDefault();
+        let target = event.target;
 
-        if (this.isBomb(positions[i][j]) || this.isFlagged(positions[i][j])) {
-          positions[i][j].classList.add('closed');
+        if (target.classList.contains('cell')) {
+          if (target.classList.contains('closed')) {
+            target.classList.add('flagged');
+            target.innerHTML = `<img src='img/flag.png'>`;
+            target.style.backgroundColor = '#e5e04a';
 
-          this.setBombsNumber(i, j - 1, positions, rows, columns);
-        } else {
-          positions[i][j].style.backgroundColor = 'teal';
-
-          if (this.setBombsNumber(i, j - 1, positions, rows, columns) > 0) {
-            this.openUpperCell(i - 1, j, positions, rows, columns);
-            this.openLowerCell(i + 1, j, positions, rows, columns);
-            return;
+            this.checkForWin(playField);
           }
+        }
 
-          this.openUpperCell(i - 1, j, positions, rows, columns);
-          this.openLowerCell(i + 1, j, positions, rows, columns);
-          this.openRightCell(i, j + 1, positions, rows, columns);
+        if (target.parentNode.classList.contains('flagged')) {
+          target.parentNode.classList.remove('flagged');
+          target.parentNode.style.backgroundColor = '';
+          target.parentNode.innerHTML = '';
         }
       }
     }
+
+    playField.contextmenuListener = listener;
+    playField.field.addEventListener(listener.on, listener.callback);
   }
 
-  openUpperCell(i, j, positions, rows, columns) {
-    if ( i >= 0 && j >= 0 && i < rows && j < columns ) {
-      if (this.isClosed(positions[i][j])) {
-        positions[i][j].classList.remove('closed');
+  gameOver(playField) {
+    playField.field.removeEventListener(playField.clickListener.on,
+                                        playField.clickListener.callback);
 
-        if (this.isBomb(positions[i][j]) || this.isFlagged(positions[i][j])) {
-          positions[i][j].classList.add('closed');
+    playField.field.removeEventListener(playField.contextmenuListener.on,
+                                        playField.contextmenuListener.callback);
 
-          this.setBombsNumber(i + 1, j, positions, rows, columns);
-        } else {
-          positions[i][j].style.backgroundColor = 'teal';
+    Smile.showDemon();
+    Timer.stop(playField.timerId);
 
-          if (this.setBombsNumber(i + 1, j, positions, rows, columns) > 0) {
-            this.openLeftCell(i, j - 1, positions, rows, columns);
-            this.openRightCell(i, j + 1, positions, rows, columns);
-            return;
-          }
+    let modal = new Modal('450px', '300px', 'Буууум!', 'loss-modal');
 
-          this.openLeftCell(i, j - 1, positions, rows, columns);
-          this.openRightCell(i, j + 1, positions, rows, columns);
-          this.openUpperCell(i - 1, j, positions);
+    modal.tune();
+    modal.show();
+
+    let restartButton = document.querySelector('.loss-modal__buttons .restart'),
+        buttonsController = new ButtonsController();
+
+    buttonsController.restartGame(restartButton, modal, playField);
+  }
+
+  checkForWin(playField) {
+    let rightFlagsCount = 0,
+        openedCells = 0;
+
+    for (let i = 0; i < playField.rows; i++) {
+      for (let j = 0; j < playField.columns; j++) {
+        if (playField.positions[i][j].classList.contains('bomb') &&
+           playField.positions[i][j].classList.contains('flagged')) {
+          rightFlagsCount++;
         }
 
-      }
-    }
-  }
-
-  openLowerCell(i, j, positions, rows, columns) {
-    if ( i >= 0 && j >= 0 && i < rows && j < columns ) {
-      if (this.isClosed(positions[i][j])) {
-        positions[i][j].classList.remove('closed');
-
-        if (this.isBomb(positions[i][j]) || this.isFlagged(positions[i][j])) {
-          positions[i][j].classList.add('closed');
-
-          this.setBombsNumber(i - 1, j, positions, rows, columns);
-        } else {
-          positions[i][j].style.backgroundColor = 'teal';
-
-          if (this.setBombsNumber(i - 1, j, positions, rows, columns) > 0) {
-            this.openLeftCell(i, j - 1, positions, rows, columns);
-            this.openRightCell(i, j + 1, positions, rows, columns);
-            return;
-          }
-
-          this.openLeftCell(i, j - 1, positions, rows, columns);
-          this.openRightCell(i, j + 1, positions, rows, columns);
-          this.openLowerCell(i + 1, j, positions, rows, columns);
+        if (!playField.positions[i][j].classList.contains('closed') &&
+            !playField.positions[i][j].classList.contains('bomb') &&
+            !playField.positions[i][j].classList.contains('flagged')) {
+          openedCells++;
         }
-
       }
     }
-  }
 
-  isClosed(elem) {
-    return (elem.classList.contains('closed')) ? true : false;
-  }
+    let bombs = playField.bombs,
+        clearCells = playField.rows * playField.columns - bombs.length;
 
-  isBomb(elem) {
-    return (elem.classList.contains('bomb')) ? true : false;
-  }
+    console.clear();
+    console.log("RIGHT FLAGS " + rightFlagsCount);
+    console.log("OPENED CELLS " + openedCells);
 
-  isFlagged(elem) {
-    return (elem.classList.contains('flagged')) ? true : false;
-  }
+    console.log("BOOMBS COUNT " + bombs.length);
+    console.log("CLEAR CELLS " + clearCells);
 
-  setBombsNumber(i, j, positions, rows, columns) {
-    let otherFunctions = new OtherFunctions();
+    // console.log(playField);
 
-    let bombsInCurrentCell =
-      otherFunctions.getBombsNumber(i, j, positions, rows, columns);
-
-    if (bombsInCurrentCell > 0) {
-      positions[i][j].style.color =
-        otherFunctions.getNumberColor(bombsInCurrentCell);
-
-      positions[i][j].innerHTML = `<p>${bombsInCurrentCell}</p>`;
+    if(bombs.length == rightFlagsCount &&
+       openedCells == clearCells) {
+      this.win(playField);
     }
+  }
 
-    return bombsInCurrentCell;
+  win(playField) {
+    playField.field.removeEventListener(playField.clickListener.on,
+                                        playField.clickListener.callback);
+
+    playField.field.removeEventListener(playField.contextmenuListener.on,
+                                        playField.contextmenuListener.callback);
+
+    Timer.stop(playField.timerId);
+
+    let modal = new Modal('550px', '300px', 'Победа!', 'win-modal');
+
+    modal.tune();
+    modal.show();
+
+    let newGameButton = document.querySelector('.win-modal__buttons .restart'),
+        buttonsController = new ButtonsController();
+
+    buttonsController.restartGame(newGameButton, modal, playField);
   }
 
 }

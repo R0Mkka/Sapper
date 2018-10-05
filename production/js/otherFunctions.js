@@ -4,7 +4,7 @@ class OtherFunctions {
     let bombs = [];
 
     for (let i = 0; i < bombsCount; i++) {
-      let randomPos = getRandomPosition(0, rows * columns);
+      let randomPos = getRandomPosition(rows * columns);
 
       if (!isNewPosition(randomPos, bombs)) {
         bombsCount++;
@@ -17,10 +17,10 @@ class OtherFunctions {
     return bombs;
 
     // LOCAL FUNCTIONS
-    function getRandomPosition(min, max) {
+    function getRandomPosition(max) {
       let rand = 0;
 
-      rand = min + Math.random() * (max + 1 - min);
+      rand = Math.random() * max;
       rand = Math.floor(rand);
 
       return rand;
@@ -76,34 +76,32 @@ class OtherFunctions {
   getBombsNumber(i, j, positions, rows, columns) {
     let bombsCounter = 0;
 
-    if (i >= 0 && j >= 0 && i < rows && j < columns) {
-      if (i + 1 < rows && isBomb(positions[i+1][j]))
-        bombsCounter++;
+    if (i + 1 < rows && isBomb(positions[i+1][j]))
+      bombsCounter++;
 
-      if (i - 1 >= 0 && isBomb(positions[i-1][j]))
-        bombsCounter++;
+    if (i - 1 >= 0 && isBomb(positions[i-1][j]))
+      bombsCounter++;
 
-      if (j + 1 < columns && isBomb(positions[i][j+1]))
-        bombsCounter++;
+    if (j + 1 < columns && isBomb(positions[i][j+1]))
+      bombsCounter++;
 
-      if (j - 1 >= 0 && isBomb(positions[i][j-1]))
-        bombsCounter++;
+    if (j - 1 >= 0 && isBomb(positions[i][j-1]))
+      bombsCounter++;
 
-      if (i + 1 < rows && j + 1 < columns && isBomb(positions[i+1][j+1]))
-        bombsCounter++;
+    if (i + 1 < rows && j + 1 < columns && isBomb(positions[i+1][j+1]))
+      bombsCounter++;
 
-      if (i + 1 < rows && j - 1 >= 0 && isBomb(positions[i+1][j-1]))
-        bombsCounter++;
+    if (i + 1 < rows && j - 1 >= 0 && isBomb(positions[i+1][j-1]))
+      bombsCounter++;
 
-      if (i - 1 >= 0 && j + 1 < columns && isBomb(positions[i-1][j+1]))
-        bombsCounter++;
+    if (i - 1 >= 0 && j + 1 < columns && isBomb(positions[i-1][j+1]))
+      bombsCounter++;
 
-      if (i - 1 >= 0 && j - 1 >= 0 && isBomb(positions[i-1][j-1]))
-        bombsCounter++;
+    if (i - 1 >= 0 && j - 1 >= 0 && isBomb(positions[i-1][j-1]))
+      bombsCounter++;
 
-      function isBomb(elem) {
-        return (elem.classList.contains('bomb')) ? true : false;
-      }
+    function isBomb(elem) {
+      return (elem.classList.contains('bomb')) ? true : false;
     }
 
     return bombsCounter;

@@ -1,0 +1,16 @@
+.sapper__footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  background-color: #530FAD;
+}
+
+.sapper__footer-copyright p {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}

@@ -559,7 +559,4 @@ function win() {
   modalWin.style.display = 'block';
 }
 
-
-
-
 // SAVING TO LOCALE STORAGE

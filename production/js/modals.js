@@ -1,6 +1,6 @@
 class Modal {
-  constructor(width = '300px',
-              height = '500px',
+  constructor(width = '100px',
+              height = '100px',
               title = 'Default title',
               className = 'modal') {
     this._width = width;

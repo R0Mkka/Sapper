@@ -1,73 +1,63 @@
 class GameController {
 
   cellLeftClick(playField) {
-    let listener = {
-      on: 'click',
-      callback: (event) => {
-        let target = event.target;
+    playField.field.onclick = (event) => {
+      let target = event.target;
 
-        if (target.classList.contains('cell')) {
-          if (target.classList.contains('bomb')) {
-            target.innerHTML = `<img src='img/bomb.png'>`;
-            target.style.backgroundColor = 'red';
+      if (target.classList.contains('cell')) {
+        if (target.classList.contains('bomb')) {
+          target.innerHTML = `<img src='img/bomb.png'>`;
+          target.style.backgroundColor = 'red';
 
-            playField.open();
-            this.gameOver(playField);
-          } else {
-            target.style.backgroundColor = 'teal';
-            target.classList.add('clicked');
+          playField.open();
+          this.gameOver(playField);
+        } else {
+          target.style.backgroundColor = 'teal';
+          target.classList.add('clicked');
 
-            let algorithm = new Algorithm();
-            algorithm.openCells(playField);
+          let algorithm = new Algorithm();
+          algorithm.openCells(playField);
 
-            this.checkForWin(playField);
-          }
+          this.checkForWin(playField);
         }
       }
     }
-
-    playField.clickListener = listener;
-    playField.field.addEventListener(listener.on, listener.callback);
   }
 
   cellRightClick(playField) {
-    let listener = {
-      on: 'contextmenu',
-      callback: (event) => {
-        event.preventDefault();
-        let target = event.target;
+    playField.field.oncontextmenu = (event) => {
+      event.preventDefault();
+      let target = event.target;
 
-        if (target.classList.contains('cell')) {
-          if (target.classList.contains('closed')) {
+      if (target.classList.contains('cell')) {
+        if (target.classList.contains('closed')) {
+          if (FlagsCounter.getFlags() > 0) {
             target.classList.add('flagged');
             target.innerHTML = `<img src='img/flag.png'>`;
             target.style.backgroundColor = '#e5e04a';
 
+            let currentFlags = FlagsCounter.getFlags();
+            FlagsCounter.setFlags(--currentFlags, playField.bombs.length);
+
             this.checkForWin(playField);
           }
         }
+      }
 
-        if (target.parentNode.classList.contains('flagged')) {
-          target.parentNode.classList.remove('flagged');
-          target.parentNode.style.backgroundColor = '';
-          target.parentNode.innerHTML = '';
-        }
+      if (target.parentNode.classList.contains('flagged')) {
+        target.parentNode.classList.remove('flagged');
+        target.parentNode.style.backgroundColor = '';
+        target.parentNode.innerHTML = '';
+
+        let currentFlags = FlagsCounter.getFlags();
+        FlagsCounter.setFlags(++currentFlags, playField.bombs.length);
       }
     }
-
-    playField.contextmenuListener = listener;
-    playField.field.addEventListener(listener.on, listener.callback);
   }
 
   gameOver(playField) {
-    playField.field.removeEventListener(playField.clickListener.on,
-                                        playField.clickListener.callback);
-
-    playField.field.removeEventListener(playField.contextmenuListener.on,
-                                        playField.contextmenuListener.callback);
-
     Smile.showDemon();
-    Timer.stop(playField.timerId);
+    Timer.stop(Timer.timerId);
 
     let modal = new Modal('450px', '300px', 'Буууум!', 'loss-modal');
 
@@ -102,15 +92,6 @@ class GameController {
     let bombs = playField.bombs,
         clearCells = playField.rows * playField.columns - bombs.length;
 
-    console.clear();
-    console.log("RIGHT FLAGS " + rightFlagsCount);
-    console.log("OPENED CELLS " + openedCells);
-
-    console.log("BOOMBS COUNT " + bombs.length);
-    console.log("CLEAR CELLS " + clearCells);
-
-    // console.log(playField);
-
     if(bombs.length == rightFlagsCount &&
        openedCells == clearCells) {
       this.win(playField);
@@ -118,23 +99,19 @@ class GameController {
   }
 
   win(playField) {
-    playField.field.removeEventListener(playField.clickListener.on,
-                                        playField.clickListener.callback);
-
-    playField.field.removeEventListener(playField.contextmenuListener.on,
-                                        playField.contextmenuListener.callback);
-
-    Timer.stop(playField.timerId);
+    Timer.stop(Timer.timerId);
 
     let modal = new Modal('550px', '300px', 'Победа!', 'win-modal');
 
     modal.tune();
     modal.show();
 
-    let newGameButton = document.querySelector('.win-modal__buttons .restart'),
+    let restartButton = document.querySelector('.win-modal__buttons .restart'),
+        saveButton = document.querySelector('.win-modal__buttons .save'),
         buttonsController = new ButtonsController();
 
-    buttonsController.restartGame(newGameButton, modal, playField);
+    buttonsController.restartGame(restartButton, modal, playField);
+    buttonsController.saveResults(saveButton, modal, playField);
   }
 
 }

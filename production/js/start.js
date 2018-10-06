@@ -6,10 +6,16 @@ function start() {
 
   Smile.set();
 
+  let playField = new PlayField();
+  let timer = new Timer();
+
   let startButton = document.querySelector('.start-modal__buttons .start'),
+      menuButton = document.querySelector('.menu'),
       buttonsController = new ButtonsController();
 
-  buttonsController.startGame(startButton, startModal);
+  buttonsController.startGame(startButton, startModal, playField);
+
+  buttonsController.menuToggle(menuButton);
 }
 
 start();

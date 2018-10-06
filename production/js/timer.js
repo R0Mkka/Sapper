@@ -3,14 +3,14 @@ class Timer {
   constructor() {
     Timer.timerMinutes = document.querySelector('.timer .timer__minutes');
     Timer.timerSeconds = document.querySelector('.timer .timer__seconds');
-    this.timerId = null;
+    Timer.timerId = null;
   }
 
-  start() {
+  static start() {
     let seconds = 0,
         minutes = '00';
 
-    this.timerId = setInterval(() => {
+    Timer.timerId = setInterval(() => {
       seconds++;
       if(seconds == 60) {
         minutes++;
@@ -37,8 +37,8 @@ class Timer {
     Timer.timerMinutes.innerHTML = '00';
   }
 
-  getTimerId() {
-    return this.timerId;
+  static getTimerId() {
+    return Timer.timerId;
   }
 
 }

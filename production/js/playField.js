@@ -1,21 +1,20 @@
 class PlayField {
 
-  constructor(rows, columns, bombsCount) {
-    this.rows = rows;
-    this.columns = columns;
-    this.bombsCount = bombsCount;
-
-    this.isTuned = false;
-
+  constructor() {
     this.field = document.querySelector('.play-field');
     this.positions = [];
     this.bombs = [];
+    this.isTuned = false;
   }
 
-  tune() {
+  setSettings(rows, columns, bombsAmount) {
+    this.rows = rows;
+    this.columns = columns;
+    this.bombsAmount = bombsAmount;
+
     let otherFunctions = new OtherFunctions();
 
-    this.bombs = otherFunctions.getBombs(this.bombsCount, this.rows, this.columns);
+    this.bombs = otherFunctions.getBombs(this.bombsAmount, this.rows, this.columns);
     this.positions = otherFunctions.getPositions(this.bombs, this.rows, this.columns);
 
     this.field.style.width = 27 * (this.columns - 1) + 30 + 'px';
@@ -54,27 +53,21 @@ class PlayField {
   hide() {
     if (this.isTuned) {
       this.field.style.display = 'none';
-      return;
+      return true;
     }
 
-    alert( '[Error:hide]:Поле не настроено!' );
+    return false;
   }
 
-  remove() {
+  clear() {
     if (this.isTuned) {
-
       while (this.field.children.length > 0) {
         this.field.removeChild(this.field.children[0]);
       }
-
-      this.positions = [];
-      this.bombs = [];
-      this.isTuned = false;
-
-      return;
+      return true;
     }
 
-    alert( '[Error:remove]:Поле не настроено!' );
+    return false;
   }
 
 }

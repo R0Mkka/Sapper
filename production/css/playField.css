@@ -1,13 +1,5 @@
 /* PLAY-FIELD */
 
-.sapper__play-field {
-  position: relative;
-  padding-top: 30px;
-  width: 100%;
-  height: 100vh;
-  background-color: #9D69D6;
-}
-
 .play-field {
   display: none; /* display: flex; */
   margin: auto;

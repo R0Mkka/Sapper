@@ -13,5 +13,4 @@ class FlagsCounter {
 
     return bombsLeft.innerHTML;
   }
-
 }

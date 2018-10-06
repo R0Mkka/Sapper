@@ -1,6 +1,6 @@
 class Check {
 
-  checkForGameStarting() {
+  static checkForGameStarting() {
     let nickName = document.querySelector('.start-modal__inputs .nick-name'),
         bombsAmount = document.querySelector('.start-modal__inputs .bombs-amount'),
         rows = document.querySelector('.start-modal__inputs .rows'),

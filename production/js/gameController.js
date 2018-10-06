@@ -57,7 +57,7 @@ class GameController {
 
   gameOver(playField) {
     Smile.showDemon();
-    Timer.stop(Timer.timerId);
+    Timer.stop();
 
     let modal = new Modal('450px', '300px', 'Буууум!', 'loss-modal');
 
@@ -92,14 +92,14 @@ class GameController {
     let bombs = playField.bombs,
         clearCells = playField.rows * playField.columns - bombs.length;
 
-    if(bombs.length == rightFlagsCount &&
+    if (bombs.length == rightFlagsCount &&
        openedCells == clearCells) {
       this.win(playField);
     }
   }
 
   win(playField) {
-    Timer.stop(Timer.timerId);
+    Timer.stop();
 
     let modal = new Modal('550px', '300px', 'Победа!', 'win-modal');
 
@@ -113,5 +113,4 @@ class GameController {
     buttonsController.restartGame(restartButton, modal, playField);
     buttonsController.saveResults(saveButton, modal, playField);
   }
-
 }

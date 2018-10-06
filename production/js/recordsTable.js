@@ -1,56 +1,67 @@
 class RecordsTable {
 
-  static show() {
-    let table = document.querySelector('.records-table'),
-        backdrop = document.querySelector('.backdrop');
+  constructor() {
+    RecordsTable.table = document.querySelector('.records-table');
+    RecordsTable.backdrop = document.querySelector('.backdrop');
+  }
 
-    table.style.display = 'block';
-    backdrop.style.display = 'block';
+  static show() {
+    RecordsTable.table.style.display = 'block';
+    RecordsTable.backdrop.style.display = 'block';
   }
 
   static hide() {
-    let table = document.querySelector('.records-table'),
-        backdrop = document.querySelector('.backdrop');
-
-    table.style.display = 'none';
-    backdrop.style.display = 'none';
+    RecordsTable.table.style.display = 'none';
+    RecordsTable.backdrop.style.display = 'none';
   }
 
   static update() {
-    let records = document.querySelector('.records-table .records__list'),
-        storage = localStorage,
+    let storage = localStorage,
         result = '';
 
     for (let key in storage) {
-      let newRecord = '';
-
       if (typeof(storage[key]) == 'string') {
-        let split = storage[key].split(' ');
+        let newRecord = createNewRecord(key, storage[key]);
 
-        newRecord += `<div>${key}</div>`;
-
-        for (let i = 0; i < split.length; i++) {
-          newRecord += `<div>${split[i]}</div>`;
-        }
-
-        newRecord = `<div class="records__item">${newRecord}</div>`;
+        result += newRecord;
       }
-
-      result += newRecord;
     }
 
-    if (result == '') {
-      records.innerHTML = '<div class="empty">Список пуст.</div>';
-    } else {
-      records.innerHTML = result;
+    setRecords(result);
+
+    // LOCAL FUNCTIONS
+    function createNewRecord(key, info) {
+      let newRecord = '';
+
+      let split = info.split(' ');
+
+      newRecord += `<div>${key}</div>`;
+
+      for (let i = 0; i < split.length; i++) {
+        newRecord += `<div>${split[i]}</div>`;
+      }
+
+      newRecord = `<div class="records__item">${newRecord}</div>`;
+
+      return newRecord;
+    }
+
+    function setRecords(records) {
+      let recordsList = document.querySelector('.records-table .records__list');
+
+      if (records) {
+        recordsList.innerHTML = records;
+      } else {
+        recordsList.innerHTML = '<div class="empty">Список пуст.</div>';
+      }
     }
   }
 
   static clear() {
-    let records = document.querySelector('.records-table .records');
+    let currentRecords = document.querySelector('.records-table .records');
 
-    while (records.children.length > 0) {
-      records.parentNode.removeChild(records.children[0]);
+    while (currentRecords.children.length > 0) {
+      currentRecords.parentNode.removeChild(currentRecords.children[0]);
     }
   }
 

@@ -39,26 +39,39 @@ class OtherFunctions {
     let positions = [];
 
     for (let i = 0; i < rows; i++) {
-      let positionsRow = [];
-
-      for (let j = 0; j < columns; j++) {
-        let cell = document.createElement('div');
-
-        if (~bombs.indexOf(currentPosition)) {
-          cell.classList.add('bomb');
-        }
-
-        cell.classList.add('cell');
-        cell.classList.add('closed');
-
-        positionsRow.push(cell);
-        currentPosition++;
-      }
+      let positionsRow = createPositionsRow();
 
       positions.push(positionsRow);
     }
 
     return positions;
+
+    // LOCAL FUNCTIONS
+    function createCell() {
+      let cell = document.createElement('div');
+
+      if (~bombs.indexOf(currentPosition)) {
+        cell.classList.add('bomb');
+      }
+
+      cell.classList.add('cell');
+      cell.classList.add('closed');
+
+      return cell;
+    }
+
+    function createPositionsRow() {
+      let positionsRow = [];
+
+      for (let j = 0; j < columns; j++) {
+        let cell = createCell();
+
+        positionsRow.push(cell);
+        currentPosition++;
+      }
+
+      return positionsRow;
+    }
   }
 
   getNumberColor(bombsAround) {
@@ -106,5 +119,4 @@ class OtherFunctions {
 
     return bombsCounter;
   }
-
 }

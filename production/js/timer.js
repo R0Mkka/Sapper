@@ -28,17 +28,12 @@ class Timer {
     }, 1000);
   }
 
-  static stop(timerId) {
-    clearInterval(timerId);
+  static stop() {
+    if (Timer.timerId) clearInterval(Timer.timerId);
   }
 
   static clear() {
     Timer.timerSeconds.innerHTML = '00';
     Timer.timerMinutes.innerHTML = '00';
   }
-
-  static getTimerId() {
-    return Timer.timerId;
-  }
-
 }

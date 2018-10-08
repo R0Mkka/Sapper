@@ -1,10 +1,20 @@
-class Check {
+import Alert from './alert.js';
+
+import Constants from './constants.js';
+
+export default class Check {
 
   static checkForGameStarting() {
     let nickName = document.querySelector('.start-modal__inputs .nick-name'),
         bombsAmount = document.querySelector('.start-modal__inputs .bombs-amount'),
         rows = document.querySelector('.start-modal__inputs .rows'),
         columns = document.querySelector('.start-modal__inputs .columns');
+
+    let errorAlert = new Alert('300px',
+                               '120px',
+                               Constants.error,
+                               '',
+                               'error');
 
     if (checkNickName(nickName) &&
         checkRowsAndColumns(rows, columns) &&
@@ -17,12 +27,14 @@ class Check {
     // LOCAL FUNCTIONS
     function checkNickName(nickName) {
       if (nickName.value.length < 1) {
-        alert( 'Не заполнено имя!' );
+        errorAlert.setMessage('Не заполнено имя!');
+        errorAlert.show();
         return false;
       }
 
-      if (nickName.value.length > 25) {
-        alert( 'Слишком длинное имя!\nМаксимальный размер: 25 симоволов.' );
+      if (nickName.value.length > 20) {
+        errorAlert.setMessage('Максимальный размер имени 20 симоволов.');
+        errorAlert.show();
         return false;
       }
 
@@ -31,17 +43,20 @@ class Check {
 
     function checkRowsAndColumns(rows, columns) {
       if (rows.value.length < 0 || columns.value.length < 0) {
-        alert( 'Не заполнен размер поля!' );
+        errorAlert.setMessage('Не заполнен размер поля!');
+        errorAlert.show();
         return false;
       }
 
       if (rows.value < 5 || columns.value < 5) {
-        alert( 'Сликшом маленькое поле!\nМинимум 5x5.' );
+        errorAlert.setMessage('Минимальный размер поля 5х5!');
+        errorAlert.show();
         return false;
       }
 
       if (rows.value > 20 || columns.value > 20) {
-        alert( 'Сликшом большое поле!\nМаксимум 20x20.' );
+        errorAlert.setMessage('Максимальный размер поля 20х20!');
+        errorAlert.show();
         return false;
       }
 
@@ -50,19 +65,22 @@ class Check {
 
     function checkBombsAmount(bombsAmount, rows, columns) {
       if (bombsAmount.value.length < 0) {
-        alert( 'Не заполнено количество бомб!' );
+        errorAlert.setMessage('Не заполнено количество бомб!');
+        errorAlert.show();
         return false;
       }
 
       if (bombsAmount.value < 1) {
-        alert( 'Должна быть хотя бы одна бомба!' );
+        errorAlert.setMessage('Должна быть хотя бы одна бомба!');
+        errorAlert.show();
         return false;
       }
 
       let maxBombsAmount = Math.round((rows.value * columns.value) * 0.7);
 
       if (bombsAmount.value > maxBombsAmount) {
-        alert( 'Слишком много бомб!\nМаксимальное количество: ' + maxBombsAmount );
+        errorAlert.setMessage(`Максимальное количество бомб: ${maxBombsAmount}`);
+        errorAlert.show();
         return false;
       }
 

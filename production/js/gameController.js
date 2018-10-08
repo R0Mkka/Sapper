@@ -1,4 +1,13 @@
-class GameController {
+import Algorithm from './algorithm.js';
+import ButtonsController from './buttonsController.js';
+import FlagsCounter from './flagsCounter.js';
+import Modal from './modal.js';
+import Smile from './smile.js';
+import Timer from './timer.js';
+
+import Constants from './constants.js';
+
+export default class GameController {
 
   cellLeftClick(playField) {
     playField.field.onclick = (event) => {
@@ -59,7 +68,7 @@ class GameController {
     Smile.showDemon();
     Timer.stop();
 
-    let modal = new Modal('450px', '300px', 'Буууум!', 'loss-modal');
+    let modal = new Modal('450px', '300px', Constants.boom, 'loss-modal');
 
     modal.tune();
     modal.show();
@@ -101,7 +110,7 @@ class GameController {
   win(playField) {
     Timer.stop();
 
-    let modal = new Modal('550px', '300px', 'Победа!', 'win-modal');
+    let modal = new Modal('550px', '300px', Constants.win, 'win-modal');
 
     modal.tune();
     modal.show();

@@ -1,4 +1,15 @@
-class ButtonsController {
+import GameController from './gameController.js';
+import FlagsCounter from './flagsCounter.js';
+import RecordsTable from './recordsTable.js';
+import Modal from './modal.js';
+import Check from './check.js';
+import Smile from './smile.js';
+import Timer from './timer.js';
+import Alert from './alert.js';
+
+import Constants from './constants.js';
+
+export default class ButtonsController {
 
   menuToggle(button) {
     let menu = document.querySelector('.menu-list');
@@ -11,7 +22,10 @@ class ButtonsController {
 
   resetGame(button, playField) {
     button.onclick = () => {
-      let resetModal = new Modal('500px', '500px', 'Настройки', 'start-modal');
+      let resetModal = new Modal('500px',
+                                 '500px',
+                                 Constants.settings,
+                                 'start-modal');
 
       resetModal.tune();
       resetModal.show();
@@ -23,6 +37,14 @@ class ButtonsController {
   }
 
   startGame(button, modal, playField) {
+    let message = 'Новая игра.';
+
+    let startGameAlert = new Alert('250px',
+                                   '100px',
+                                   Constants.alert,
+                                   message,
+                                   'alert');
+
     button.onclick = () => {
       if (Check.checkForGameStarting()) {
         if (modal) modal.hide();
@@ -48,11 +70,21 @@ class ButtonsController {
 
         gameController.cellLeftClick(playField);
         gameController.cellRightClick(playField);
+
+        startGameAlert.show();
       }
     }
   }
 
   restartGame(button, modal, playField) {
+    let message = 'Новая игра.';
+
+    let restartGameAlert = new Alert('250px',
+                                     '100px',
+                                     Constants.alert,
+                                     message,
+                                     'alert');
+
     button.onclick = () => {
       if (modal) modal.hide();
       this.hideMenu();
@@ -63,8 +95,8 @@ class ButtonsController {
       playField.hide();
       playField.clear();
       playField.setSettings(settings.rows,
-                               settings.columns,
-                               settings.bombsAmount);
+                            settings.columns,
+                            settings.bombsAmount);
       playField.draw();
 
       Timer.stop();
@@ -77,6 +109,8 @@ class ButtonsController {
 
       gameController.cellLeftClick(playField);
       gameController.cellRightClick(playField);
+
+      restartGameAlert.show();
     }
   }
 
@@ -95,17 +129,33 @@ class ButtonsController {
   }
 
   clearRecords(button) {
+    let message = 'Рекорды были очищены!';
+
+    let clearedRecordsAlert = new Alert('250px',
+                                        '100px',
+                                        Constants.alert,
+                                        message,
+                                        'alert');
+
     button.onclick = () => {
       localStorage.clear();
       this.hideMenu();
-      alert( 'Рекорды были очищены!' );
+      clearedRecordsAlert.show();
     }
   }
 
   saveResults(button) {
-    button.onclick = () => {
-      let gameSettings = this.getGameSettings();
+    let gameSettings = this.getGameSettings();
 
+    let message = `Результат для игрока ${gameSettings.nickName} сохранен.`;
+
+    let savedResultsAlert = new Alert('310px',
+                                      '130px',
+                                      Constants.alert,
+                                      message,
+                                      'alert');
+
+    button.onclick = () => {
       let minutes = document.querySelector('.timer .timer__minutes'),
           seconds = document.querySelector('.timer .timer__seconds');
 
@@ -116,7 +166,7 @@ class ButtonsController {
 
       localStorage.setItem(gameSettings.nickName, results);
 
-      alert( `Результат для игрока ${gameSettings.nickName} сохранен.` );
+      savedResultsAlert.show();
     }
   }
 

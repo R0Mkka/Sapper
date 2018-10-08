@@ -1,4 +1,4 @@
-class RecordsTable {
+export default class RecordsTable {
 
   constructor() {
     RecordsTable.table = document.querySelector('.records-table');

@@ -1,4 +1,4 @@
-class Smile {
+export default class Smile {
 
   static set() {
     let smile = document.querySelector('.sapper__header-smile img');

@@ -1,4 +1,6 @@
-class Algorithm {
+import OtherFunctions from './otherFunctions.js';
+
+export default class Algorithm {
 
   openCells(playField) {
     let rows = playField.rows,

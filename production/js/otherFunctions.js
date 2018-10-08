@@ -1,4 +1,4 @@
-class OtherFunctions {
+export default class OtherFunctions {
 
   getBombs(bombsCount, rows, columns) {
     let bombs = [];

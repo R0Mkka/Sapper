@@ -1,4 +1,6 @@
-class PlayField {
+import OtherFunctions from './otherFunctions.js';
+
+export default class PlayField {
 
   constructor() {
     this.field = document.querySelector('.play-field');
@@ -33,8 +35,6 @@ class PlayField {
       this.field.style.display = 'flex';
       return;
     }
-
-    alert( '[Error:draw]:Поле не настроено!' );
   }
 
   open() {

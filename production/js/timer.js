@@ -1,4 +1,4 @@
-class Timer {
+export default class Timer {
 
   constructor() {
     Timer.timerMinutes = document.querySelector('.timer .timer__minutes');

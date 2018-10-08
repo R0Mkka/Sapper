@@ -1,4 +1,4 @@
-class FlagsCounter {
+export default class FlagsCounter {
 
   static setFlags(bombsCount, maxBombs) {
     let bombsLeft = document.querySelector('.flags-left');

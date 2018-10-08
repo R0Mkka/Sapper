@@ -1,6 +1,6 @@
-class Modal {
-  constructor(width = '100px',
-              height = '100px',
+export default class Modal {
+  constructor(width = '300px',
+              height = '150px',
               title = 'Default title',
               className = 'modal') {
     this.width = width;
@@ -39,8 +39,6 @@ class Modal {
 
       return;
     }
-
-    alert( '[Error]:Модальное окно не настроено!' );
   }
 
   hide() {
@@ -52,7 +50,5 @@ class Modal {
 
       return;
     }
-
-    alert( '[Error]:Модальное окно и так скрыто!' );
   }
 }

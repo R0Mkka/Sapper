@@ -1,5 +1,15 @@
+import ButtonsController from './buttonsController.js';
+import Modal from './modal.js';
+import PlayField from './playField.js';
+import RecordsTable from './recordsTable.js';
+import Smile from './smile.js';
+import Timer from './timer.js';
+import Alert from './alert.js';
+
+import Constants from './constants.js';
+
 function start() {
-  let startModal = new Modal('500px', '500px', 'Начало игры!', 'start-modal');
+  let startModal = new Modal('500px', '500px', Constants.gameStart, 'start-modal');
 
   startModal.tune();
   startModal.show();

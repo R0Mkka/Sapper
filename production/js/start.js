@@ -8,6 +8,8 @@ import Alert from './alert.js';
 
 import Constants from './constants.js';
 
+import Check from './check.js';
+
 function start() {
   let startModal = new Modal('500px', '500px', Constants.gameStart, 'start-modal');
 
@@ -22,6 +24,7 @@ function start() {
       timer = new Timer();
 
   setMenuButtons(playField, buttonsController);
+  setChecks();
 
   let startButton = document.querySelector('.start-modal__buttons .start'),
       menuButton = document.querySelector('.menu');
@@ -29,7 +32,7 @@ function start() {
   buttonsController.startGame(startButton, startModal, playField);
   buttonsController.menuToggle(menuButton);
 
-  // LOCAL FUNCTION
+  // LOCAL FUNCTIONS
   function setMenuButtons(playField, buttonsController) {
     let restartButton = document.querySelector('.menu-list .restart'),
         resetButton = document.querySelector('.menu-list .reset'),
@@ -42,6 +45,16 @@ function start() {
     buttonsController.showRecordsTable(showRecordsButton);
     buttonsController.closeRecordsTable(closeButton);
     buttonsController.clearRecords(clearRecordsButton);
+  }
+
+  function setChecks() {
+    let rowsField = document.querySelector('.start-modal__inputs .rows'),
+        columnsField = document.querySelector('.start-modal__inputs .columns'),
+        bombsField = document.querySelector('.start-modal__inputs .bombs-amount');
+
+    Check.checkNumberInput(rowsField);
+    Check.checkNumberInput(columnsField);
+    Check.checkNumberInput(bombsField);
   }
 }
 

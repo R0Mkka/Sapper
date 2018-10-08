@@ -88,4 +88,14 @@ export default class Check {
     }
   }
 
+  static checkNumberInput(field) {
+    field.onkeydown = (event) => {
+      let key = event.keyCode;
+
+      if (key == 190 || key == 110 || key == 188) {
+        event.preventDefault();
+      }
+    }
+  }
+
 }

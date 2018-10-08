@@ -12,6 +12,7 @@
 }
 
 .start-modal__header {
+  position: relative;
   display: flex;
   justify-content: center;
   color: #fff;
@@ -21,6 +22,31 @@
   margin: 0px 15px;
   width: 80px;
   height: 80px;
+}
+
+.modal__close {
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #9D69D6;
+
+  color: #9D69D6;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.modal__close:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+.modal__close::selection {
+  background: transparent;
 }
 
 .start-modal__inputs {

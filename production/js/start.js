@@ -37,13 +37,13 @@ function start() {
     let restartButton = document.querySelector('.menu-list .restart'),
         resetButton = document.querySelector('.menu-list .reset'),
         showRecordsButton = document.querySelector('.menu-list .show-records'),
-        closeButton = document.querySelector('.table-close'),
+        tableCloseButton = document.querySelector('.table-close'),
         clearRecordsButton = document.querySelector('.menu-list .clear-records');
 
     buttonsController.restartGame(restartButton, null, playField);
     buttonsController.resetGame(resetButton, playField);
     buttonsController.showRecordsTable(showRecordsButton);
-    buttonsController.closeRecordsTable(closeButton);
+    buttonsController.closeRecordsTable(tableCloseButton);
     buttonsController.clearRecords(clearRecordsButton);
   }
 

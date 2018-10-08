@@ -4,10 +4,95 @@
   justify-content: space-between;
 }
 
+/* MENU */
+
+.sapper__header-menu {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 94px;
+  height: 44px;
+  background-color: #8942D6;
+  border: 3px solid #8942D6;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menu:hover {
+  background-color: #530FAD;
+  border-color: #fff;
+}
+
+.menu:active {
+  margin-top: 2px;
+}
+
+.menu p {
+  padding: 0px;
+  margin: 0px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 44px;
+  text-align: center;
+  color: #fff;
+}
+
+.menu-list {
+  display: none;
+  position: absolute;
+  top: 55px;
+  left: 0px;
+  width: 220px;
+  z-index: 10000;
+}
+
+.menu-point {
+  position: relative;
+  margin-top: 5px;
+  padding-left: 20px;
+  height: 50px;
+  background-color: #8942D6;
+  border: 3px solid #8942D6;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menu-point:hover {
+  background-color: #530FAD;
+  border-color: #fff;
+}
+
+.menu-point:active {
+  top: 2px;
+}
+
+.menu-point p {
+  margin: 0px;
+  padding: 0px;
+  font-size: 18px;
+  line-height: 50px;
+  color: #fff;
+}
+
+.menu-point p::selection {
+  background: transparent;
+}
+
+/* SMILE TIMER FLAGS-LEFT*/
+
 .sapper__header-smile img {
   position: relative;
   width: 50px;
   height: 50px;
+}
+
+.sapper__header-timer {
+  position: relative;
+  left: 120px;
 }
 
 .sapper__header-timer,

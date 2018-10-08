@@ -13,6 +13,7 @@ export default class Modal {
 
     this.backdrop = document.querySelector('.backdrop');
     this.modal = document.querySelector(`.${this.className}`);
+    this.cross = document.querySelector('.modal__close');
   }
 
   tune() { // Настроить
@@ -36,8 +37,6 @@ export default class Modal {
       this.modal.style.display = 'block';
 
       this.showed = true;
-
-      return;
     }
   }
 
@@ -47,8 +46,12 @@ export default class Modal {
       this.modal.style.display = 'none';
 
       this.showed = false;
+    }
+  }
 
-      return;
+  showCross() {
+    if(this.tuned) {
+      this.cross.style.display = 'block';
     }
   }
 }

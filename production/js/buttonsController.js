@@ -29,10 +29,12 @@ export default class ButtonsController {
 
       resetModal.tune();
       resetModal.show();
+      resetModal.showCross();
 
       let startButton = document.querySelector('.start-modal__buttons .start');
 
       this.startGame(startButton, resetModal, playField);
+      this.closeModal(resetModal.cross, resetModal);
     }
   }
 
@@ -111,6 +113,13 @@ export default class ButtonsController {
       gameController.cellRightClick(playField);
 
       restartGameAlert.show();
+    }
+  }
+
+  closeModal(cross, modal) {
+    cross.onclick = () => {
+      modal.hide();
+      this.hideMenu();
     }
   }
 

@@ -1,4 +1,4 @@
- let Constants = {
+let Constants = {
   gameStart: 'Начало игры!',
   boom: 'Буууум!',
   win: 'Победа!',

@@ -1,17 +1,16 @@
-import Algorithm from './algorithm.js';
-import ButtonsController from './buttonsController.js';
+import Algorithm from './algorithm/algorithm.js';
+import ButtonsController from './buttonsController/buttonsController.js';
 import FlagsCounter from './flagsCounter.js';
-import Modal from './modal.js';
+import Modal from './modal/modal.js';
 import Smile from './smile.js';
 import Timer from './timer.js';
-
-import Constants from './constants.js';
+import Helpers from './helpers.js';
 
 export default class GameController {
 
   cellLeftClick(playField) {
     playField.field.onclick = (event) => {
-      let target = event.target;
+      const target = event.target;
 
       if (target.classList.contains('cell')) {
         if (target.classList.contains('bomb')) {
@@ -19,7 +18,7 @@ export default class GameController {
           target.style.backgroundColor = 'red';
 
           playField.open();
-          this.gameOver(playField);
+          this._gameOver(playField);
         } else {
           target.style.backgroundColor = 'teal';
           target.classList.add('clicked');
@@ -27,48 +26,24 @@ export default class GameController {
           let algorithm = new Algorithm();
           algorithm.openCells(playField);
 
-          this.checkForWin(playField);
+          this._checkForWin(playField);
         }
       }
     }
   }
 
-  cellRightClick(playField) {
-    playField.field.oncontextmenu = (event) => {
-      event.preventDefault();
-      let target = event.target;
-
-      if (target.classList.contains('cell')) {
-        if (target.classList.contains('closed')) {
-          if (FlagsCounter.getFlags() > 0) {
-            target.classList.add('flagged');
-            target.innerHTML = `<img src='img/flag.png'>`;
-            target.style.backgroundColor = '#e5e04a';
-
-            let currentFlags = FlagsCounter.getFlags();
-            FlagsCounter.setFlags(--currentFlags, playField.bombs.length);
-
-            this.checkForWin(playField);
-          }
-        }
-      }
-
-      if (target.parentNode.classList.contains('flagged')) {
-        target.parentNode.classList.remove('flagged');
-        target.parentNode.style.backgroundColor = '';
-        target.parentNode.innerHTML = '';
-
-        let currentFlags = FlagsCounter.getFlags();
-        FlagsCounter.setFlags(++currentFlags, playField.bombs.length);
-      }
-    }
-  }
-
-  gameOver(playField) {
+  _gameOver(playField) {
     Smile.showDemon();
     Timer.stop();
 
-    let modal = new Modal('450px', '300px', Constants.boom, 'loss-modal');
+    const modalSettings = {
+      width: '450px',
+      height: '300px',
+      title: 'Буууум!',
+      className: 'loss-modal'
+    }
+
+    let modal = new Modal(modalSettings);
 
     modal.tune();
     modal.show();
@@ -79,7 +54,7 @@ export default class GameController {
     buttonsController.restartGame(restartButton, modal, playField);
   }
 
-  checkForWin(playField) {
+  _checkForWin(playField) {
     let rightFlagsCount = 0,
         openedCells = 0;
 
@@ -103,21 +78,60 @@ export default class GameController {
 
     if (bombs.length == rightFlagsCount &&
        openedCells == clearCells) {
-      this.win(playField);
+      this._win(playField);
     }
   }
 
-  win(playField) {
+  cellRightClick(playField) {
+    playField.field.oncontextmenu = (event) => {
+      event.preventDefault();
+
+      const target = event.target;
+
+      if (target.classList.contains('cell')) {
+        if (target.classList.contains('closed')) {
+          if (FlagsCounter.getFlags() > 0) {
+            target.classList.add('flagged');
+            target.innerHTML = `<img src='img/flag.png'>`;
+            target.style.backgroundColor = '#e5e04a';
+
+            let currentFlags = FlagsCounter.getFlags();
+            FlagsCounter.setFlags(--currentFlags, playField.bombs.length);
+
+            this._checkForWin(playField);
+          }
+        }
+      }
+
+      if (target.parentNode.classList.contains('flagged')) {
+        target.parentNode.classList.remove('flagged');
+        target.parentNode.style.backgroundColor = '';
+        target.parentNode.innerHTML = '';
+
+        let currentFlags = FlagsCounter.getFlags();
+        FlagsCounter.setFlags(++currentFlags, playField.bombs.length);
+      }
+    }
+  }
+
+  _win(playField) {
     Timer.stop();
 
-    let modal = new Modal('550px', '300px', Constants.win, 'win-modal');
+    const modalSettings = {
+      width: '550px',
+      height: '300px',
+      title: 'Победа!',
+      className: 'win-modal'
+    }
+
+    const modal = new Modal(modalSettings);
 
     modal.tune();
     modal.show();
 
-    let restartButton = document.querySelector('.win-modal__buttons .restart'),
-        saveButton = document.querySelector('.win-modal__buttons .save'),
-        buttonsController = new ButtonsController();
+    const restartButton = document.querySelector('.win-modal__buttons .restart');
+    const saveButton = document.querySelector('.win-modal__buttons .save');
+    const buttonsController = new ButtonsController();
 
     buttonsController.restartGame(restartButton, modal, playField);
     buttonsController.saveResults(saveButton, modal, playField);

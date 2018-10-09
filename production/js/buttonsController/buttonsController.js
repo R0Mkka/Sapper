@@ -1,13 +1,15 @@
-import GameController from './gameController.js';
-import FlagsCounter from './flagsCounter.js';
-import RecordsTable from './recordsTable.js';
-import Modal from './modal.js';
-import Check from './check.js';
-import Smile from './smile.js';
-import Timer from './timer.js';
-import Alert from './alert.js';
+import GameController from '../gameController.js';
+import FlagsCounter from '../flagsCounter.js';
+import RecordsTable from '../recordsTable.js';
+import Modal from '../modal/modal.js';
+import Check from '../check/check.js';
+import Alert from '../alert/alert.js';
+import Smile from '../smile.js';
+import Timer from '../timer.js';
 
-import Constants from './constants.js';
+import Constants from '../constants.js';
+
+import { startAlert } from './buttonsController.config.js';
 
 export default class ButtonsController {
 
@@ -22,10 +24,14 @@ export default class ButtonsController {
 
   resetGame(button, playField) {
     button.onclick = () => {
-      let resetModal = new Modal('500px',
-                                 '500px',
-                                 Constants.settings,
-                                 'start-modal');
+      const modalSettings = {
+        width: '500px',
+        height: '500px',
+        title: 'Настройки',
+        className: 'start-modal'
+      }
+
+      let resetModal = new Modal(modalSettings);
 
       resetModal.tune();
       resetModal.show();
@@ -39,16 +45,12 @@ export default class ButtonsController {
   }
 
   startGame(button, modal, playField) {
-    let message = 'Новая игра.';
+    const startGameAlert = new Alert(startAlert);
 
-    let startGameAlert = new Alert('250px',
-                                   '100px',
-                                   Constants.alert,
-                                   message,
-                                   'alert');
+    const check = new Check();
 
     button.onclick = () => {
-      if (Check.checkForGameStarting()) {
+      if (check.checkForGameStarting()) {
         if (modal) modal.hide();
         this.hideMenu();
         Smile.showSmile();
@@ -79,13 +81,7 @@ export default class ButtonsController {
   }
 
   restartGame(button, modal, playField) {
-    let message = 'Новая игра.';
-
-    let restartGameAlert = new Alert('250px',
-                                     '100px',
-                                     Constants.alert,
-                                     message,
-                                     'alert');
+    const restartGameAlert = new Alert(startAlert);
 
     button.onclick = () => {
       if (modal) modal.hide();
@@ -138,13 +134,17 @@ export default class ButtonsController {
   }
 
   clearRecords(button) {
+    const alertSettings = {
+      width: '250px',
+      height: '100px',
+      headline: 'Оповещение',
+      message: 'Рекорды были очищены!',
+      type: 'alert'
+    }
+
     let message = 'Рекорды были очищены!';
 
-    let clearedRecordsAlert = new Alert('250px',
-                                        '100px',
-                                        Constants.alert,
-                                        message,
-                                        'alert');
+    let clearedRecordsAlert = new Alert(alertSettings);
 
     button.onclick = () => {
       localStorage.clear();

@@ -1,17 +1,24 @@
-import ButtonsController from './buttonsController.js';
-import Modal from './modal.js';
+import ButtonsController from './buttonsController/buttonsController.js';
+import Modal from './modal/modal.js';
 import PlayField from './playField.js';
 import RecordsTable from './recordsTable.js';
 import Smile from './smile.js';
 import Timer from './timer.js';
-import Alert from './alert.js';
+import Alert from './alert/alert.js';
 
 import Constants from './constants.js';
 
-import Check from './check.js';
+import Check from './check/check.js';
 
 function start() {
-  let startModal = new Modal('500px', '500px', Constants.gameStart, 'start-modal');
+  const modalSettings = {
+    width: '500px',
+    height: '500px',
+    title: 'Начало игры!',
+    className: 'start-modal'
+  }
+
+  let startModal = new Modal(modalSettings);
 
   startModal.tune();
   startModal.show();
@@ -48,13 +55,15 @@ function start() {
   }
 
   function setChecks() {
+    let check = new Check();
+
     let rowsField = document.querySelector('.start-modal__inputs .rows'),
         columnsField = document.querySelector('.start-modal__inputs .columns'),
         bombsField = document.querySelector('.start-modal__inputs .bombs-amount');
 
-    Check.checkNumberInput(rowsField);
-    Check.checkNumberInput(columnsField);
-    Check.checkNumberInput(bombsField);
+    check.checkNumberInput(rowsField);
+    check.checkNumberInput(columnsField);
+    check.checkNumberInput(bombsField);
   }
 }
 

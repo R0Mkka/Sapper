@@ -9,7 +9,6 @@ export default class Modal {
     this._modal = document.querySelector(selectors.modal);
 
     this._modalHeader = document.querySelector(selectors.header);
-    // this._modalClose = document.querySelector(selectors.close);
     this._modalContent = document.querySelector(selectors.content);
     this._modalButtons = document.querySelector(selectors.buttons);
   }
@@ -107,16 +106,11 @@ export default class Modal {
   show() {
     this._backdrop.style.display = displayType.visible;
     this._modal.style.display = displayType.visible;
-
-    // if (this._modalSettings.showClose) {
-    //   this._modalClose.style.display = displayType.visible;
-    // }
   }
 
   hide() {
     this._backdrop.style.display = displayType.hidden;
     this._modal.style.display = displayType.hidden;
-    // this._modalClose.style.display = displayType.hidden;
   }
 
 }

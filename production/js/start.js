@@ -37,15 +37,13 @@ function showModal(modal) {
 }
 
 function setModalFieldsCheckers() {
-  const checker = new Checker();
-
   const rowsField = document.querySelector(selectors.rows);
   const columnsField = document.querySelector(selectors.columns);
-  const bombsField = document.querySelector(selectors.bombs);
+  const bombsField = document.querySelector(selectors.bombsAmount);
 
-  checker.checkNumberInput(rowsField);
-  checker.checkNumberInput(columnsField);
-  checker.checkNumberInput(bombsField);
+  Checker.checkNumberInput(rowsField);
+  Checker.checkNumberInput(columnsField);
+  Checker.checkNumberInput(bombsField);
 }
 
 function setMenuButtons(playField, buttonsController) {
@@ -58,7 +56,7 @@ function setMenuButtons(playField, buttonsController) {
   buttonsController.restartGame(restartButton, null, playField);
   buttonsController.resetGame(resetButton, playField);
   buttonsController.showRecordsTable(showRecordsButton);
-  buttonsController.closeRecordsTable(closeTableButton);
+  buttonsController.hideRecordsTable(closeTableButton);
   buttonsController.clearRecords(clearRecordsButton);
 }
 

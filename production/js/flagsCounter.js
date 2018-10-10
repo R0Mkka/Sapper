@@ -1,7 +1,12 @@
 export default class FlagsCounter {
 
   static setFlags(bombsCount, maxBombs) {
-    let flagsLeft = document.querySelector('.flags-left');
+    const flagsLeft = document.querySelector('.flags-left');
+
+    if (!maxBombs) {
+      flagsLeft.innerHTML = bombsCount;
+      return;
+    }
 
     if (bombsCount >= 0 && bombsCount <= maxBombs) {
       flagsLeft.innerHTML = bombsCount;
@@ -9,7 +14,7 @@ export default class FlagsCounter {
   }
 
   static getFlags() {
-    let flagsLeft = document.querySelector('.flags-left');
+    const flagsLeft = document.querySelector('.flags-left');
 
     return flagsLeft.innerHTML;
   }

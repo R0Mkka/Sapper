@@ -9,7 +9,7 @@ export default class PlayField {
     this.isTuned = false;
   }
 
-  setSettings(rows, columns, bombsAmount) {
+  setSettings({rows, columns, bombsAmount}) {
     this.rows = rows;
     this.columns = columns;
     this.bombsAmount = bombsAmount;

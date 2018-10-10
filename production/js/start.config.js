@@ -8,7 +8,7 @@ export const selectors = {
   closeTable: '.close-table',
   rows: '.modal__content .rows',
   columns: '.modal__content .columns',
-  bombs: '.modal__content .bombs-amount'
+  bombsAmount: '.modal__content .bombs-amount'
 }
 
 export const startModalSettings = {

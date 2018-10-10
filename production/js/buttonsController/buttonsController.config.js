@@ -6,14 +6,27 @@ export const newGameAlertSettings = {
   type: 'alert'
 }
 
+export const clearRecordsAlertSettings = {
+  width: '250px',
+  height: '100px',
+  headline: 'Оповещение',
+  message: 'Рекорды были очищены!',
+  type: 'alert'
+}
+
 export const selectors = {
   menuItems: '.menu-list',
+  
   start: '.modal__buttons .start',
   close: '.modal__buttons .close',
+
   nickName: '.modal__content .nick-name',
   bombsAmount: '.modal__content .bombs-amount',
   rows: '.modal__content .rows',
-  columns: '.modal__content .columns'
+  columns: '.modal__content .columns',
+
+  timerMinutes: '.timer .timer__minutes',
+  timerSeconds: '.timer .timer__seconds',
 }
 
 export const resetModalSettings = {
@@ -24,7 +37,7 @@ export const resetModalSettings = {
       './img/smiling.png',
       './img/with_tongue.png'
     ],
-    text: 'Настройки!'
+    text: 'Настройки'
   },
   content: {
     inputs: [

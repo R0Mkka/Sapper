@@ -6,7 +6,7 @@ export const selectors = {
 }
 
 export const alertSettings = {
-  width: '280px',
+  width: '290px',
   height: '120px',
   headline: 'Ошибка!',
   message: 'Какая-то ошибка',

@@ -16,7 +16,7 @@ export const clearRecordsAlertSettings = {
 
 export const selectors = {
   menuItems: '.menu-list',
-  
+
   start: '.modal__buttons .start',
   close: '.modal__buttons .close',
 

@@ -12,9 +12,9 @@ export default class Timer {
 
     Timer.timerId = setInterval(() => {
       seconds++;
-      if(seconds == 60) {
+      if (seconds == 60) {
         minutes++;
-        if(minutes < 10) minutes = '0' + minutes;
+        if (minutes < 10) minutes = '0' + minutes;
         seconds = 0;
       }
 

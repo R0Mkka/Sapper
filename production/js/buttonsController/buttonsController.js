@@ -1,16 +1,16 @@
-import GameController from '../gameController.js';
+import GameController from '../gameController/gameController.js';
+import RecordsTable from '../recordsTable/recordsTable.js';
 import FlagsCounter from '../flagsCounter.js';
-import RecordsTable from '../recordsTable.js';
 import Checker from '../checker/checker.js';
-import Modal from '../modal/newModal.js';
+import Modal from '../modal/modal.js';
 import Alert from '../alert/alert.js';
 import Smile from '../smile.js';
 import Timer from '../timer.js';
 
-import { newGameAlertSettings } from './buttonsController.config.js';
 import { clearRecordsAlertSettings } from './buttonsController.config.js';
-import { selectors } from './buttonsController.config.js';
+import { newGameAlertSettings } from './buttonsController.config.js';
 import { resetModalSettings } from './buttonsController.config.js';
+import { selectors } from './buttonsController.config.js';
 
 import { displayType } from '../displayType.js';
 
@@ -49,7 +49,7 @@ export default class ButtonsController {
 
   _setNewDefaultSettings() {
     const newSettings = this._getGameSettings();
-    
+
     resetModalSettings.content.inputs[0].value = newSettings.nickName;
     resetModalSettings.content.inputs[1].value = newSettings.rows;
     resetModalSettings.content.inputs[2].value = newSettings.columns;
@@ -71,7 +71,7 @@ export default class ButtonsController {
   }
 
   _hideMenuItems() {
-    const menuItems = document.querySelector('.menu-list');
+    const menuItems = document.querySelector(selectors.menuItems);
 
     menuItems.style.display = displayType.hidden;
   }
@@ -116,17 +116,45 @@ export default class ButtonsController {
   }
 
   _getGameSettings() {
-    const nickName = document.querySelector(selectors.nickName);
-    const bombsAmount = document.querySelector(selectors.bombsAmount);
-    const rows = document.querySelector(selectors.rows);
-    const columns = document.querySelector(selectors.columns);
+    let data = {};
 
-    return {
-      nickName: nickName.value,
-      bombsAmount: bombsAmount.value,
-      rows: rows.value,
-      columns: columns.value
+    if (document.querySelector(selectors.nickName)) {
+      const nickName = document.querySelector(selectors.nickName);
+      const bombsAmount = document.querySelector(selectors.bombsAmount);
+      const rows = document.querySelector(selectors.rows);
+      const columns = document.querySelector(selectors.columns);
+
+      data = {
+        nickName: nickName.value,
+        bombsAmount: bombsAmount.value,
+        rows: rows.value,
+        columns: columns.value
+      }
+
+      this._setToSessionStorage(data);
+    } else {
+      const split = sessionStorage.getItem('data').split(' ');
+
+      data = {
+        nickName: split[0],
+        bombsAmount: +split[1],
+        rows: +split[2],
+        columns: +split[3]
+      }
     }
+
+    return data;
+  }
+
+  _setToSessionStorage(data) {
+    let dataString = '';
+
+    dataString += `${data.nickName}`;
+    dataString += ` ${data.bombsAmount}`;
+    dataString += ` ${data.rows}`;
+    dataString += ` ${data.columns}`;
+
+    sessionStorage.setItem('data', dataString);
   }
 
   _restartTimer() {

@@ -1,3 +1,5 @@
+import { colors } from './colors.js';
+
 export default class OtherFunctions {
 
   getBombs(bombsCount, rows, columns) {
@@ -76,14 +78,14 @@ export default class OtherFunctions {
 
   getNumberColor(bombsAround) {
     if (bombsAround == 1) {
-      return 'lime';
+      return colors.one;
     }
 
     if (bombsAround == 2 || bombsAround == 3) {
-      return 'orange';
+      return colors.twoOrThree;
     }
 
-    return 'skyblue';
+    return colors.moreThanThree;
   }
 
   getBombsNumber(i, j, positions, rows, columns) {

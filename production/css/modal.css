@@ -64,6 +64,10 @@
   font-weight: 700;
 }
 
+.modal__content .text-line {
+  margin: 5px;
+}
+
 .modal__content input {
   padding: 5px 10px;
   font-size: 18px;

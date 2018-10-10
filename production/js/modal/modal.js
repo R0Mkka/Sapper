@@ -1,55 +1,120 @@
 import { defaultSettings } from './modal.config.js';
 import { selectors } from './modal.config.js';
+import { displayType } from '../displayType.js';
 
 export default class Modal {
-  constructor(modalSettings) {
-    this.modalSettings = modalSettings || defaultSettings;
 
-    this.tuned = false;
-    this.showed = false;
+  constructor() {
+    this._backdrop = document.querySelector(selectors.backdrop);
+    this._modal = document.querySelector(selectors.modal);
 
-    this.backdrop = document.querySelector(selectors.backdrop);
-    this.closeButton = document.querySelector(selectors.close);
+    this._modalHeader = document.querySelector(selectors.header);
+    this._modalContent = document.querySelector(selectors.content);
+    this._modalButtons = document.querySelector(selectors.buttons);
+  }
 
-    this.modal = document.querySelector(`.${this.modalSettings.className}`);
+  setSettings(modalSettings) {
+    this._modalSettings = modalSettings || defaultSettings;
   }
 
   tune() {
-    const header = document.querySelector(`.${this.modalSettings.className}__header h1`);
-    header.innerHTML = this.modalSettings.title;
+    this._modal.style.width = this._modalSettings.width;
+    this._modal.style.height = this._modalSettings.height;
 
-    this.modal.style.width = this.modalSettings.width;
-    this.modal.style.height = this.modalSettings.height;
+    this._modal.style.left = this._countLeftOffset();
 
-    const leftOffset =
-      (document.documentElement.clientWidth / 2) - (parseInt(this.modalSettings.width) / 2) + 'px';
+    this._modalHeader.innerHTML = this._formHeader();
+    this._modalContent.innerHTML = this._formContent();
+    this._modalButtons.innerHTML = this._formButtons();
+  }
 
-    this.modal.style.left = leftOffset;
+  _countLeftOffset() {
+    const windowWidth = document.documentElement.clientWidth;
+    const modalWidth = this._modalSettings.width;
 
-    this.tuned = true;
+    const leftOffset = (windowWidth / 2) - (parseInt(modalWidth) / 2) + 'px';
+
+    return leftOffset;
+  }
+
+  _formHeader() {
+    let resultHeader = '';
+
+    const headerImages = this._modalSettings.header.images;
+    const headerText = this._modalSettings.header.text;
+
+    resultHeader += `<img src=${headerImages[0]}>`;
+    resultHeader += `<h1>${headerText}</h1>`;
+    resultHeader += `<img src=${headerImages[1]}>`;
+
+    return resultHeader;
+  }
+
+  _formContent() {
+    let resultContent = '';
+
+    if (this._modalSettings.content.inputs) {
+      const inputs = this._modalSettings.content.inputs;
+
+      for (let i = 0; i < inputs.length; i++) {
+        resultContent += this._addInput(inputs[i]);
+      }
+
+      return resultContent;
+    }
+
+    const text = this._modalSettings.content.text;
+
+    for (let i = 0; i < text.length; i++) {
+      resultContent += `<p class="text-line">${text[i]}</p>`;
+    }
+
+    return resultContent;
+  }
+
+  _addInput(input) {
+    let resultInput = '';
+
+    const wrapper = input.wrapper;
+    const hint = input.hint;
+    const type = input.type;
+    const classes = input.classes;
+    const value = input.value;
+
+    if (hint) resultInput += `<p>${hint}</p>`;
+
+    if (wrapper) resultInput += '<div>';
+
+    resultInput += `<input`;
+    resultInput += ` type=${type}`;
+    resultInput += ` class=${classes}`;
+    resultInput += ` value=${value}>`;
+
+    if (!wrapper) resultInput += '</div>';
+
+    return resultInput;
+  }
+
+  _formButtons() {
+    let resultButtons = '';
+
+    const buttons = this._modalSettings.buttons;
+
+    for (let i = 0; i < buttons.length; i++) {
+      resultButtons += buttons[i];
+    }
+
+    return resultButtons;
   }
 
   show() {
-    if (this.tuned) {
-      this.backdrop.style.display = 'block';
-      this.modal.style.display = 'block';
-
-      this.showed = true;
-    }
+    this._backdrop.style.display = displayType.visible;
+    this._modal.style.display = displayType.visible;
   }
 
   hide() {
-    if (this.showed) {
-      this.backdrop.style.display = 'none';
-      this.modal.style.display = 'none';
-
-      this.showed = false;
-    }
+    this._backdrop.style.display = displayType.hidden;
+    this._modal.style.display = displayType.hidden;
   }
 
-  showCloseButtons() {
-    if (this.tuned) {
-      this.cross.style.display = 'block';
-    }
-  }
 }

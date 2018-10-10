@@ -1,22 +1,17 @@
-export const newGameAlertSettings = {
-  width: '250px',
-  height: '100px',
-  headline: 'Оповещение',
-  message: 'Новая игра.',
-  type: 'alert'
-}
-
 export const selectors = {
-  menuItems: '.menu-list',
   start: '.modal__buttons .start',
-  close: '.modal__buttons .close',
-  nickName: '.modal__content .nick-name',
-  bombsAmount: '.modal__content .bombs-amount',
+  menu: '.menu',
+  restart: '.menu-list .restart',
+  reset: '.menu-list .reset',
+  showRecords: '.menu-list .show-records',
+  clearRecords: '.menu-list .clear-records',
+  closeTable: '.close-table',
   rows: '.modal__content .rows',
-  columns: '.modal__content .columns'
+  columns: '.modal__content .columns',
+  bombs: '.modal__content .bombs-amount'
 }
 
-export const resetModalSettings = {
+export const startModalSettings = {
   width: '500px',
   height: '500px',
   header: {
@@ -24,7 +19,7 @@ export const resetModalSettings = {
       './img/smiling.png',
       './img/with_tongue.png'
     ],
-    text: 'Настройки!'
+    text: 'Начало игры!'
   },
   content: {
     inputs: [
@@ -58,7 +53,6 @@ export const resetModalSettings = {
     text: null
   },
   buttons: [
-    '<div class="start btn">Сохранить</div>',
-    '<div class="close btn">Закрыть</div>'
+    '<div class="start btn">Поехали!</div>'
   ]
 }

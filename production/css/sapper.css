@@ -42,7 +42,7 @@
   z-index: 100;
 }
 
-.table-close {
+.close-table {
   position: absolute;
   top: 20px;
   right: 30px;
@@ -57,12 +57,12 @@
   cursor: pointer;
 }
 
-.table-close:hover {
+.close-table:hover {
   border-color: #fff;
   color: #fff;
 }
 
-.table-close::selection {
+.close-table::selection {
   background: transparent;
 }
 

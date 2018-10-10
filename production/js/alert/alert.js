@@ -2,13 +2,17 @@ import { defaultSettings } from './alert.config.js';
 import { selectors } from './alert.config.js';
 import { images } from './alert.config.js';
 
+import { displayType } from '../displayType.js';
+
 export default class Alert {
 
-  constructor(alertSettings) {
-    this.alertSettings = alertSettings || defaultSettings;
-    this.timerId = null;
+  constructor() {
+    this._timerId = null;
+    this._alert = document.querySelector(selectors.alert);
+  }
 
-    this.alert = document.querySelector('.alert');
+  setSettings(alertSettings) {
+    this._alertSettings = alertSettings || defaultSettings;
   }
 
   show() {
@@ -16,27 +20,27 @@ export default class Alert {
 
     this._tune();
 
-    this.alert.style.display = 'block';
+    this._alert.style.display = displayType.visible;
 
-    this.timerId = setTimeout(() => { this.hide(); }, 3000);
+    this._timerId = setTimeout(() => { this._hide(); }, 3000);
   }
 
   _killTimer() {
-    if (this.timerId) {
-      clearTimeout(this.timerId);
+    if (this._timerId) {
+      clearTimeout(this._timerId);
     }
   }
 
   _tune() {
-    this.alert.style.width = this.alertSettings.width;
-    this.alert.style.height = this.alertSettings.height;
+    this._alert.style.width = this._alertSettings.width;
+    this._alert.style.height = this._alertSettings.height;
 
     const imagePath = this._getAlertImageByType();
-    const headline = this.alert.querySelector(selectors.headline);
-    const message = this.alert.querySelector(selectors.message);
+    const headline = this._alert.querySelector(selectors.headline);
+    const message = this._alert.querySelector(selectors.message);
 
     headline.innerHTML = this._formHeadline(imagePath);
-    message.innerHTML = this.alertSettings.message;
+    message.innerHTML = this._alertSettings.message;
   }
 
   _getAlertImageByType() {
@@ -46,19 +50,19 @@ export default class Alert {
   }
 
   _checkAlert() {
-    return this.alertSettings.type == 'alert';
+    return this._alertSettings.type == 'alert';
   }
 
   _formHeadline(imagePath) {
     let headline = imagePath;
 
-    headline += `<p>${this.alertSettings.headline}</p>`;
+    headline += `<p>${this._alertSettings.headline}</p>`;
 
     return headline;
   }
 
-  hide() {
-    this.alert.style.display = 'none';
+  _hide() {
+    this._alert.style.display = displayType.hidden;
   }
 
   setMessage(message) {

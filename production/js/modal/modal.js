@@ -9,7 +9,7 @@ export default class Modal {
     this.showed = false;
 
     this.backdrop = document.querySelector(selectors.backdrop);
-    this.cross = document.querySelector(selectors.close);
+    this.closeButton = document.querySelector(selectors.close);
 
     this.modal = document.querySelector(`.${this.modalSettings.className}`);
   }
@@ -47,7 +47,7 @@ export default class Modal {
     }
   }
 
-  showCross() {
+  showCloseButtons() {
     if (this.tuned) {
       this.cross.style.display = 'block';
     }

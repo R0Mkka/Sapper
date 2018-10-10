@@ -1,61 +1,76 @@
 import GameController from '../gameController.js';
 import FlagsCounter from '../flagsCounter.js';
 import RecordsTable from '../recordsTable.js';
-import Modal from '../modal/modal.js';
-import Check from '../check/check.js';
+import Checker from '../checker/checker.js';
+import Modal from '../modal/newModal.js';
 import Alert from '../alert/alert.js';
 import Smile from '../smile.js';
 import Timer from '../timer.js';
 
-import Constants from '../constants.js';
+import { newGameAlertSettings } from './buttonsController.config.js';
+import { selectors } from './buttonsController.config.js';
+import { resetModalSettings } from './buttonsController.config.js';
 
-import { startAlert } from './buttonsController.config.js';
+import { displayType } from '../displayType.js';
 
 export default class ButtonsController {
 
-  menuToggle(button) {
-    let menu = document.querySelector('.menu-list');
-    menu.style.display = 'none';
+  constructor() {
+    this.modal = new Modal();
+    this.alert = new Alert();
+  }
 
-    button.onclick = function() {
-      menu.style.display = (menu.style.display == 'none') ? 'block' : 'none';
+  menuToggle(button) {
+    const menuItems = document.querySelector(selectors.menuItems);
+
+    menuItems.style.display = displayType.hidden;
+
+    button.onclick = () => {
+      menuItems.style.display = (menuItems.style.display == displayType.hidden)
+      ? displayType.visible
+      : displayType.hidden;
     }
   }
 
   resetGame(button, playField) {
     button.onclick = () => {
-      const modalSettings = {
-        width: '500px',
-        height: '500px',
-        title: 'Настройки',
-        className: 'start-modal'
-      }
 
-      let resetModal = new Modal(modalSettings);
+      this._showResetModal();
 
-      resetModal.tune();
-      resetModal.show();
-      resetModal.showCross();
+      const startButton = document.querySelector(selectors.start);
+      const closeButton = document.querySelector(selectors.close);
 
-      let startButton = document.querySelector('.start-modal__buttons .start');
+      this.startGame(startButton, this.modal, playField);
+      this._setCloseButton(closeButton);
+    }
+  }
 
-      this.startGame(startButton, resetModal, playField);
-      this.closeModal(resetModal.cross, resetModal);
+  _showResetModal() {
+    this.modal.setSettings(resetModalSettings);
+    this.modal.tune();
+    this.modal.show();
+  }
+
+  _setCloseButton(closeButton) {
+    closeButton.onclick = () => {
+      this.modal.hide();
+
+      this._hideMenuItems();
     }
   }
 
   startGame(button, modal, playField) {
-    const startGameAlert = new Alert(startAlert);
+    this.alert.setSettings(newGameAlertSettings);
 
-    const check = new Check();
+    const checker = new Checker();
 
     button.onclick = () => {
-      if (check.checkForGameStarting()) {
+      if (checker.checkForGameStarting()) {
         if (modal) modal.hide();
-        this.hideMenu();
+        this._hideMenuItems();
         Smile.showSmile();
 
-        let settings = this.getGameSettings();
+        let settings = this._getGameSettings();
 
         playField.hide();
         playField.clear();
@@ -75,20 +90,20 @@ export default class ButtonsController {
         gameController.cellLeftClick(playField);
         gameController.cellRightClick(playField);
 
-        startGameAlert.show();
+        this.alert.show();
       }
     }
   }
 
   restartGame(button, modal, playField) {
-    const restartGameAlert = new Alert(startAlert);
+    this.alert.setSettings(newGameAlertSettings);
 
     button.onclick = () => {
       if (modal) modal.hide();
-      this.hideMenu();
+      this._hideMenuItems();
       Smile.showSmile();
 
-      let settings = this.getGameSettings();
+      let settings = this._getGameSettings();
 
       playField.hide();
       playField.clear();
@@ -108,22 +123,17 @@ export default class ButtonsController {
       gameController.cellLeftClick(playField);
       gameController.cellRightClick(playField);
 
-      restartGameAlert.show();
+      this.alert.show();
     }
   }
 
-  closeModal(cross, modal) {
-    cross.onclick = () => {
-      modal.hide();
-      this.hideMenu();
-    }
-  }
+
 
   showRecordsTable(button) {
     button.onclick = () => {
       RecordsTable.update();
       RecordsTable.show();
-      this.hideMenu();
+      this._hideMenuItems();
     }
   }
 
@@ -148,13 +158,13 @@ export default class ButtonsController {
 
     button.onclick = () => {
       localStorage.clear();
-      this.hideMenu();
+      this._hideMenuItems();
       clearedRecordsAlert.show();
     }
   }
 
   saveResults(button) {
-    let gameSettings = this.getGameSettings();
+    let gameSettings = this._getGameSettings();
 
     let message = `Результат для игрока ${gameSettings.nickName} сохранен.`;
 
@@ -179,15 +189,15 @@ export default class ButtonsController {
     }
   }
 
-  hideMenu() {
+  _hideMenuItems() {
     document.querySelector('.menu-list').style.display = 'none';
   }
 
-  getGameSettings() {
-    let nickName = document.querySelector('.start-modal__inputs .nick-name'),
-        bombsAmount = document.querySelector('.start-modal__inputs .bombs-amount'),
-        rows = document.querySelector('.start-modal__inputs .rows'),
-        columns = document.querySelector('.start-modal__inputs .columns');
+  _getGameSettings() {
+    const nickName = document.querySelector(selectors.nickName);
+    const bombsAmount = document.querySelector(selectors.bombsAmount);
+    const rows = document.querySelector(selectors.rows);
+    const columns = document.querySelector(selectors.columns);
 
     return {
       nickName: nickName.value,

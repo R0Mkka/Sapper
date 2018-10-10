@@ -1,10 +1,10 @@
 import Alert from '../alert/alert.js';
 
-import { selectors } from './check.config.js';
-import { alertSettings } from './check.config.js';
-import { errors } from './check.config.js';
+import { selectors } from './checker.config.js';
+import { alertSettings } from './checker.config.js';
+import { errors } from './checker.config.js';
 
-export default class Check {
+export default class Checker {
 
   checkForGameStarting() {
     const nickName = document.querySelector(selectors.nickName);

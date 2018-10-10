@@ -1,12 +1,12 @@
 export const selectors = {
-  nickName: '.start-modal__inputs .nick-name',
-  bombsAmount: '.start-modal__inputs .bombs-amount',
-  rows: '.start-modal__inputs .rows',
-  columns: '.start-modal__inputs .columns'
+  nickName: '.modal__content .nick-name',
+  bombsAmount: '.modal__content .bombs-amount',
+  rows: '.modal__content .rows',
+  columns: '.modal__content .columns'
 }
 
 export const alertSettings = {
-  width: '300px',
+  width: '280px',
   height: '120px',
   headline: 'Ошибка!',
   message: 'Какая-то ошибка',

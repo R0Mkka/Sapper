@@ -1,70 +1,65 @@
 import ButtonsController from './buttonsController/buttonsController.js';
-import Modal from './modal/modal.js';
-import PlayField from './playField.js';
 import RecordsTable from './recordsTable.js';
+import Checker from './checker/checker.js';
+import Modal from './modal/newModal.js';
+import PlayField from './playField.js';
+import Alert from './alert/alert.js';
 import Smile from './smile.js';
 import Timer from './timer.js';
-import Alert from './alert/alert.js';
 
-import Constants from './constants.js';
-
-import Check from './check/check.js';
+import { startModalSettings } from './start.config.js';
+import { selectors } from './start.config.js';
 
 function start() {
-  const modalSettings = {
-    width: '500px',
-    height: '500px',
-    title: 'Начало игры!',
-    className: 'start-modal'
-  }
+  const buttonsController = new ButtonsController();
+  const recordsTable = new RecordsTable();
+  const playField = new PlayField();
+  const modal = new Modal();
+  const timer = new Timer();
 
-  let startModal = new Modal(modalSettings);
+  showModal(modal);
+  setModalFieldsCheckers();
 
-  startModal.tune();
-  startModal.show();
+  const startButton = document.querySelector(selectors.start);
+  const menuButton = document.querySelector(selectors.menu);
 
-  Smile.set();
-
-  let buttonsController = new ButtonsController(),
-      recordsTable = new RecordsTable(),
-      playField = new PlayField(),
-      timer = new Timer();
-
-  setMenuButtons(playField, buttonsController);
-  setChecks();
-
-  let startButton = document.querySelector('.start-modal__buttons .start'),
-      menuButton = document.querySelector('.menu');
-
-  buttonsController.startGame(startButton, startModal, playField);
+  buttonsController.startGame(startButton, modal, playField);
   buttonsController.menuToggle(menuButton);
 
-  // LOCAL FUNCTIONS
-  function setMenuButtons(playField, buttonsController) {
-    let restartButton = document.querySelector('.menu-list .restart'),
-        resetButton = document.querySelector('.menu-list .reset'),
-        showRecordsButton = document.querySelector('.menu-list .show-records'),
-        tableCloseButton = document.querySelector('.table-close'),
-        clearRecordsButton = document.querySelector('.menu-list .clear-records');
+  Smile.set();
+  setMenuButtons(playField, buttonsController);
+}
 
-    buttonsController.restartGame(restartButton, null, playField);
-    buttonsController.resetGame(resetButton, playField);
-    buttonsController.showRecordsTable(showRecordsButton);
-    buttonsController.closeRecordsTable(tableCloseButton);
-    buttonsController.clearRecords(clearRecordsButton);
-  }
+function showModal(modal) {
+  modal.setSettings(startModalSettings);
+  modal.tune();
+  modal.show();
+}
 
-  function setChecks() {
-    let check = new Check();
+function setModalFieldsCheckers() {
+  const checker = new Checker();
 
-    let rowsField = document.querySelector('.start-modal__inputs .rows'),
-        columnsField = document.querySelector('.start-modal__inputs .columns'),
-        bombsField = document.querySelector('.start-modal__inputs .bombs-amount');
+  const rowsField = document.querySelector(selectors.rows);
+  const columnsField = document.querySelector(selectors.columns);
+  const bombsField = document.querySelector(selectors.bombs);
 
-    check.checkNumberInput(rowsField);
-    check.checkNumberInput(columnsField);
-    check.checkNumberInput(bombsField);
-  }
+  checker.checkNumberInput(rowsField);
+  checker.checkNumberInput(columnsField);
+  checker.checkNumberInput(bombsField);
+}
+
+function setMenuButtons(playField, buttonsController) {
+  const restartButton = document.querySelector(selectors.restart);
+  const resetButton = document.querySelector(selectors.reset);
+  const showRecordsButton = document.querySelector(selectors.showRecords);
+  const closeTableButton = document.querySelector(selectors.closeTable);
+  const clearRecordsButton = document.querySelector(selectors.clearRecords);
+
+  buttonsController.restartGame(restartButton, null, playField);
+  buttonsController.resetGame(resetButton, playField);
+  buttonsController.showRecordsTable(showRecordsButton);
+  buttonsController.closeRecordsTable(closeTableButton);
+  buttonsController.clearRecords(clearRecordsButton);
 }
 
 start();

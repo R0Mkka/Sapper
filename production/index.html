@@ -8,9 +8,7 @@
   <title>Aleksanov's Sapper</title>
 
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/startModal.css">
-  <link rel="stylesheet" href="css/lossModal.css">
-  <link rel="stylesheet" href="css/winModal.css">
+  <link rel="stylesheet" href="css/modal.css">
   <link rel="stylesheet" href="css/sapper.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/playField.css">
@@ -20,7 +18,20 @@
 </head>
 <body>
   <div class="backdrop"></div>
-  <div class="start-modal">
+
+  <div class="modal">
+    <div class="modal__header">
+
+    </div>
+    <div class="modal__content">
+
+    </div>
+    <div class="modal__buttons">
+
+    </div>
+  </div>
+
+  <!-- <div class="start-modal">
     <div class="start-modal__header">
       <img src="img/smiling.png" alt="smile">
       <h1></h1>
@@ -94,11 +105,11 @@
         Сохранить результат
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="records-table">
     <h1>Таблица рекордов</h1>
-    <div class="table-close">X</div>
+    <div class="close-table">X</div>
     <div class="records">
       <div class="records__header">
         <div class="item name">Имя</div>
@@ -106,52 +117,45 @@
         <div class="item field">Размер<br>поля</div>
         <div class="item bombs">Количество<br>бомб</div>
       </div>
-
       <hr class="line">
 
-      <div class="records__list">
+      <div class="records__list"></div>
 
-      </div>
-
-      <div class="empty">
-
-      </div>
+      <div class="empty"></div>
     </div>
   </div>
 
   <div class="sapper">
     <div class="sapper__header">
+      <div class="sapper__header-menu-and-timer">
+        <div class="sapper__header-menu">
+          <div class="menu btn">
+            <p>Меню</p>
+          </div>
 
-    <div class="sapper__header-menu-and-timer">
-      <div class="sapper__header-menu">
-        <div class="menu btn">
-          <p>Меню</p>
+          <div class="menu-list">
+            <div class="menu-point restart">
+              <p>Начать наново</p>
+            </div>
+            <div class="menu-point reset">
+              <p>Изменить настройки</p>
+            </div>
+            <div class="menu-point show-records">
+              <p>Таблица рекордов</p>
+            </div>
+            <div class="menu-point clear-records">
+              <p>Очистить рекорды</p>
+            </div>
+          </div>
         </div>
 
-        <div class="menu-list">
-          <div class="menu-point restart">
-            <p>Начать наново</p>
-          </div>
-          <div class="menu-point reset">
-            <p>Изменить настройки</p>
-          </div>
-          <div class="menu-point show-records">
-            <p>Таблица рекордов</p>
-          </div>
-          <div class="menu-point clear-records">
-            <p>Очистить рекорды</p>
-          </div>
+        <div class="sapper__header-timer">
+          <p class="timer">
+            <span class="timer__minutes">00</span>:
+            <span class="timer__seconds">00</span>
+          </p>
         </div>
       </div>
-
-      <div class="sapper__header-timer">
-        <p class="timer">
-          <span class="timer__minutes">00</span>
-          :
-          <span class="timer__seconds">00</span>
-        </p>
-      </div>
-    </div>
 
       <div class="sapper__header-smile">
         <img src="img/smiling.png" alt="Smiling">
@@ -163,8 +167,6 @@
     </div>
 
     <div class="sapper__main-section">
-
-
       <div class="play-field">
 
       </div>
@@ -187,18 +189,5 @@
   </div>
 
   <script src="./dist/bundle.js"></script>
-
-  <!-- <script src="js/recordsTable.js"></script>
-  <script src="js/flagsCounter.js"></script>
-  <script src="js/smile.js"></script>
-  <script src="js/timer.js"></script>
-  <script src="js/algorithm.js"></script>
-  <script src="js/gameController.js"></script>
-  <script src="js/otherFunctions.js"></script>
-  <script src="js/playField.js"></script>
-  <script src="js/check.js"></script>
-  <script src="js/buttonsController.js"></script>
-  <script src="js/modal.js"></script>
-  <script src="js/start.js"></script> -->
 </body>
 </html>

@@ -7,6 +7,7 @@ export const defaultSettings = {
 }
 
 export const selectors = {
+  alert: '.alert',
   headline: '.alert__headline',
   message: '.alert__message p'
 }

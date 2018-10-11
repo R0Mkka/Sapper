@@ -13,7 +13,7 @@ export default class Checker {
     const columns = document.querySelector(selectors.columns);
 
     if (Checker._checkNickName(nickName) &&
-        Checker._checkRowsAndColumns(rows, columns) &&
+        Checker._checkFieldSize(rows, columns) &&
         Checker._checkBombsAmount(bombsAmount, rows, columns)) {
 
         return true;
@@ -24,13 +24,15 @@ export default class Checker {
 
   static _checkNickName(nickName) {
     if (nickName.value.length < 1) {
-      Checker._setMessageAndShowAlert(errors.noName);
+      Checker._setAlertMessage(errors.noName);
+      Checker._showAlert();
 
       return false;
     }
 
     if (nickName.value.length > 20) {
-      Checker._setMessageAndShowAlert(errors.bigName);
+      Checker._setAlertMessage(errors.bigName);
+      Checker._showAlert();
 
       return false;
     }
@@ -38,43 +40,34 @@ export default class Checker {
     return true;
   }
 
-  static _setMessageAndShowAlert(message) {
+  static _setAlertMessage(message) {
     alertSettings.message = message;
+  }
 
+  static _showAlert() {
     const errorAlert = new Alert();
 
     errorAlert.setSettings(alertSettings);
     errorAlert.show();
   }
 
-  static _checkRowsAndColumns(rows, columns) {
-    // switch(true) {
-    //   case rows.value.length < 1 || columns.value.length < 1:
-    //     return false;
-    //   case rows.value.length < 1 || columns.value.length < 1:
-    //       break;
-    //       case rows.value.length < 1 || columns.value.length < 1:
-    //         break;
-    //         case rows.value.length < 1 || columns.value.length < 1:
-    //           break;
-    // }
+  static _checkFieldSize(rows, columns) {
+    switch (true) {
+      case rows.value.length < 1 || columns.value.length < 1:
+        Checker._setAlertMessage(errors.noFieldSize);
+        Checker._showAlert();
 
-    if (rows.value.length < 1 || columns.value.length < 1) {
-      Checker._setMessageAndShowAlert(errors.noFieldSize);
+        return false;
+      case rows.value < 5 || columns.value < 5:
+        Checker._setAlertMessage(errors.smallField);
+        Checker._showAlert();
 
-      return false;
-    }
+        return false;
+      case rows.value > 20 || columns.value > 20:
+        Checker._setAlertMessage(errors.bigField);
+        Checker._showAlert();
 
-    if (rows.value < 5 || columns.value < 5) {
-      Checker._setMessageAndShowAlert(errors.smallField);
-
-      return false;
-    }
-
-    if (rows.value > 20 || columns.value > 20) {
-      Checker._setMessageAndShowAlert(errors.bigField);
-
-      return false;
+        return false;
     }
 
     return true;
@@ -82,21 +75,24 @@ export default class Checker {
 
   static _checkBombsAmount(bombsAmount, rows, columns) {
     if (bombsAmount.value.length < 1) {
-      Checker._setMessageAndShowAlert(errors.noBombsAmount);
+      Checker._setAlertMessage(errors.noBombsAmount);
+      Checker._showAlert();
 
       return false;
     }
 
     if (bombsAmount.value < 1) {
-      Checker._setMessageAndShowAlert(errors.tooFewBombs);
+      Checker._setAlertMessage(errors.tooFewBombs);
+      Checker._showAlert();
 
       return false;
     }
 
-    let maxBombsAmount = Math.round((rows.value * columns.value) * 0.7);
+    const maxBombsAmount = Math.round((rows.value * columns.value) * 0.7);
 
     if (bombsAmount.value > maxBombsAmount) {
-      Checker._setMessageAndShowAlert(errors.maxBombs + maxBombsAmount);
+      Checker._setAlertMessage(errors.maxBombs + maxBombsAmount);
+      Checker._showAlert();
 
       return false;
     }
@@ -106,7 +102,7 @@ export default class Checker {
 
   static checkNumberInput(field) {
     field.onkeydown = (event) => {
-      let key = event.keyCode;
+      const key = event.keyCode;
 
       if (key == 190 || key == 110 || key == 188) {
         event.preventDefault();

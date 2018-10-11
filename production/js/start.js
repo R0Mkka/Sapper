@@ -1,10 +1,10 @@
 import ButtonsController from './buttonsController/buttonsController.js';
 import RecordsTable from './recordsTable/recordsTable.js';
+import PlayField from './playField/playField.js';
 import Checker from './checker/checker.js';
-import PlayField from './playField.js';
 import Modal from './modal/modal.js';
 import Alert from './alert/alert.js';
-import Smile from './smile.js';
+import Smile from './smile/smile.js';
 import Timer from './timer.js';
 
 import { startModalSettings } from './start.config.js';

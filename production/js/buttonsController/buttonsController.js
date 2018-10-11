@@ -4,7 +4,7 @@ import FlagsCounter from '../flagsCounter.js';
 import Checker from '../checker/checker.js';
 import Modal from '../modal/modal.js';
 import Alert from '../alert/alert.js';
-import Smile from '../smile.js';
+import Smile from '../smile/smile.js';
 import Timer from '../timer.js';
 
 import { clearRecordsAlertSettings } from './buttonsController.config.js';

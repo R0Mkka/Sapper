@@ -3,6 +3,11 @@ export const selectors = {
   save: '.modal__buttons .save'
 }
 
+export const images = {
+  bomb: `<img src='img/bomb.png'>`,
+  flag: `<img src='img/flag.png'>`
+}
+
 export const lossModalSettings = {
   width: '500px',
   height: '260px',

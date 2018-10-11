@@ -2,8 +2,8 @@ import ButtonsController from '../buttonsController/buttonsController.js';
 import Algorithm from '../algorithm/algorithm.js';
 import FlagsCounter from '../flagsCounter.js';
 import Modal from '../modal/modal.js';
+import Smile from '../smile/smile.js';
 import Helpers from '../helpers.js';
-import Smile from '../smile.js';
 import Timer from '../timer.js';
 
 import { classes } from '../classes.js';
@@ -12,6 +12,7 @@ import { colors } from '../colors.js';
 import { lossModalSettings } from './gameController.config.js';
 import { winModalSettings } from './gameController.config.js';
 import { selectors } from './gameController.config.js';
+import { images } from './gameController.config.js';
 
 export default class GameController {
   constructor() {
@@ -48,7 +49,7 @@ export default class GameController {
   _putBomb(target) {
     target.style.backgroundColor = colors.bomb;
 
-    target.innerHTML = `<img src='img/bomb.png'>`;
+    target.innerHTML = images.bomb;
   }
 
   _gameOver(playField) {
@@ -151,7 +152,7 @@ export default class GameController {
       }
 
       if (Helpers.flaggedCheck(target.parentNode)) {
-        this._removeFlag(target.parentNode);
+        this._removeFlag(target.parentNode, playField);
       }
     }
   }
@@ -160,7 +161,7 @@ export default class GameController {
     if (FlagsCounter.getFlags() > 0) {
       Helpers.addClass(target, classes.flagged);
 
-      target.innerHTML = `<img src='img/flag.png'>`;
+      target.innerHTML = images.flag;
       target.style.backgroundColor = colors.flag;
 
       this._updateFlagsCount(-1, playField);
@@ -169,7 +170,7 @@ export default class GameController {
     }
   }
 
-  _removeFlag(target) {
+  _removeFlag(target, playField) {
     Helpers.removeClass(target, classes.flagged);
 
     target.style.backgroundColor = '';
@@ -179,7 +180,7 @@ export default class GameController {
   }
 
   _updateFlagsCount(diffetence, playField) {
-    const currentFlags = FlagsCounter.getFlags() + diffetence;
+    const currentFlags = +FlagsCounter.getFlags() + diffetence;
 
     FlagsCounter.setFlags(currentFlags, playField.bombs.length);
   }

@@ -1,4 +1,5 @@
 export const displayType = {
   visible: 'block',
-  hidden: 'none'
+  hidden: 'none',
+  flex: 'flex'
 }

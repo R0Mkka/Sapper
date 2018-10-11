@@ -1,15 +1,18 @@
+import Helpers from './helpers.js';
+
 import { colors } from './colors.js';
+import { classes } from './classes.js';
 
 export default class OtherFunctions {
 
-  getBombs(bombsCount, rows, columns) {
-    let bombs = [];
+  getBombs(bombsAmount, rows, columns) {
+    const bombs = [];
 
-    for (let i = 0; i < bombsCount; i++) {
-      let randomPos = getRandomPosition(rows * columns);
+    for (let i = 0; i < bombsAmount; i++) {
+      const randomPos = this._getRandomPosition(rows * columns);
 
-      if (!isNewPosition(randomPos, bombs)) {
-        bombsCount++;
+      if (!this._isNewPosition(randomPos, bombs)) {
+        i--;
         continue;
       }
 
@@ -17,63 +20,61 @@ export default class OtherFunctions {
     }
 
     return bombs;
+  }
 
-    // LOCAL FUNCTIONS
-    function getRandomPosition(max) {
-      let rand = 0;
+  _getRandomPosition(max) {
+    let rand = 0;
 
-      rand = Math.random() * max;
-      rand = Math.floor(rand);
+    rand = Math.random() * max;
+    rand = Math.floor(rand);
 
-      return rand;
-    }
+    return rand;
+  }
 
-    function isNewPosition(number, array) {
-      if (array.indexOf(number) != -1) {
-        return false;
-      }
-      return true;
-    }
+  _isNewPosition(position, array) {
+    return array.indexOf(position) == -1;
   }
 
   getPositions(bombs, rows, columns) {
-    let currentPosition = 0;
-    let positions = [];
+    const positions = [];
+    const currentPos = {
+      index: 0
+    }
 
     for (let i = 0; i < rows; i++) {
-      let positionsRow = createPositionsRow();
+      const positionsRow = this._createPositionsRow(bombs, columns, currentPos);
 
       positions.push(positionsRow);
     }
 
     return positions;
+  }
 
-    // LOCAL FUNCTIONS
-    function createCell() {
-      let cell = document.createElement('div');
+  _createPositionsRow(bombs, columns, currentPos) {
+    const positionsRow = [];
 
-      if (~bombs.indexOf(currentPosition)) {
-        cell.classList.add('bomb');
-      }
+    for (let j = 0; j < columns; j++) {
+      const cell = this._createCell(bombs, currentPos);
 
-      cell.classList.add('cell');
-      cell.classList.add('closed');
+      positionsRow.push(cell);
 
-      return cell;
+      currentPos.index++;
     }
 
-    function createPositionsRow() {
-      let positionsRow = [];
+    return positionsRow;
+  }
 
-      for (let j = 0; j < columns; j++) {
-        let cell = createCell();
+  _createCell(bombs, currentPos) {
+    const cell = document.createElement('div');
 
-        positionsRow.push(cell);
-        currentPosition++;
-      }
-
-      return positionsRow;
+    if (~bombs.indexOf(currentPos.index)) {
+      Helpers.addClass(cell, classes.bomb);
     }
+
+    Helpers.addClass(cell, classes.cell);
+    Helpers.addClass(cell, classes.closed);
+
+    return cell;
   }
 
   getNumberColor(bombsAround) {
@@ -89,36 +90,36 @@ export default class OtherFunctions {
   }
 
   getBombsNumber(i, j, positions, rows, columns) {
-    let bombsCounter = 0;
+    let bombsAmount = 0;
 
     if (i + 1 < rows && isBomb(positions[i+1][j]))
-      bombsCounter++;
+      bombsAmount++;
 
     if (i - 1 >= 0 && isBomb(positions[i-1][j]))
-      bombsCounter++;
+      bombsAmount++;
 
     if (j + 1 < columns && isBomb(positions[i][j+1]))
-      bombsCounter++;
+      bombsAmount++;
 
     if (j - 1 >= 0 && isBomb(positions[i][j-1]))
-      bombsCounter++;
+      bombsAmount++;
 
     if (i + 1 < rows && j + 1 < columns && isBomb(positions[i+1][j+1]))
-      bombsCounter++;
+      bombsAmount++;
 
     if (i + 1 < rows && j - 1 >= 0 && isBomb(positions[i+1][j-1]))
-      bombsCounter++;
+      bombsAmount++;
 
     if (i - 1 >= 0 && j + 1 < columns && isBomb(positions[i-1][j+1]))
-      bombsCounter++;
+      bombsAmount++;
 
     if (i - 1 >= 0 && j - 1 >= 0 && isBomb(positions[i-1][j-1]))
-      bombsCounter++;
+      bombsAmount++;
 
     function isBomb(elem) {
-      return (elem.classList.contains('bomb')) ? true : false;
+      return (elem.classList.contains(classes.bomb));
     }
 
-    return bombsCounter;
+    return bombsAmount;
   }
 }

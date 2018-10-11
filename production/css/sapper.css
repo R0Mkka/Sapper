@@ -9,7 +9,8 @@
   position: relative;
   padding-top: 30px;
   width: 100%;
-  height: 660px;
+  min-height: 100vh;
+  height: 100%;
   background-color: #9D69D6;
 }
 

@@ -35,9 +35,9 @@ export default class ButtonsController {
 
   resetGame(button, playField) {
     button.onclick = () => {
-      this._setNewDefaultSettings();
-
       this._showResetModal();
+      this._setModalFieldsCheckers();
+      this._setNewDefaultSettings();
 
       const startButton = document.querySelector(selectors.start);
       const closeButton = document.querySelector(selectors.close);
@@ -47,19 +47,34 @@ export default class ButtonsController {
     }
   }
 
-  _setNewDefaultSettings() {
-    const newSettings = this._getGameSettings();
-
-    resetModalSettings.content.inputs[0].value = newSettings.nickName;
-    resetModalSettings.content.inputs[1].value = newSettings.rows;
-    resetModalSettings.content.inputs[2].value = newSettings.columns;
-    resetModalSettings.content.inputs[3].value = newSettings.bombsAmount;
-  }
-
   _showResetModal() {
     this.modal.setSettings(resetModalSettings);
     this.modal.tune();
     this.modal.show();
+  }
+
+  _setModalFieldsCheckers() {
+    const rowsField = document.querySelector(selectors.rows);
+    const columnsField = document.querySelector(selectors.columns);
+    const bombsField = document.querySelector(selectors.bombsAmount);
+
+    Checker.checkNumberInput(rowsField);
+    Checker.checkNumberInput(columnsField);
+    Checker.checkNumberInput(bombsField);
+  }
+
+  _setNewDefaultSettings() {
+    const settings = this._getSettingsFromSessionStorage();
+
+    const nickName = document.querySelector(selectors.nickName);
+    const bombsAmount = document.querySelector(selectors.bombsAmount);
+    const rows = document.querySelector(selectors.rows);
+    const columns = document.querySelector(selectors.columns);
+
+    nickName.value = settings.nickName;
+    rows.value = settings.rows;
+    columns.value = settings.columns;
+    bombsAmount.value = settings.bombsAmount;
   }
 
   _setCloseButton(closeButton) {
@@ -116,7 +131,7 @@ export default class ButtonsController {
   }
 
   _getGameSettings() {
-    let data = {};
+    let settings = {};
 
     if (document.querySelector(selectors.nickName)) {
       const nickName = document.querySelector(selectors.nickName);
@@ -124,37 +139,43 @@ export default class ButtonsController {
       const rows = document.querySelector(selectors.rows);
       const columns = document.querySelector(selectors.columns);
 
-      data = {
+      settings = {
         nickName: nickName.value,
         bombsAmount: bombsAmount.value,
         rows: rows.value,
         columns: columns.value
       }
 
-      this._setToSessionStorage(data);
+      this._setToSessionStorage(settings);
     } else {
-      const split = sessionStorage.getItem('data').split(' ');
-
-      data = {
-        nickName: split[0],
-        bombsAmount: +split[1],
-        rows: +split[2],
-        columns: +split[3]
-      }
+      settings = this._getSettingsFromSessionStorage();
     }
 
-    return data;
+    return settings;
   }
 
-  _setToSessionStorage(data) {
-    let dataString = '';
+  _setToSessionStorage(settings) {
+    let settingsString = '';
 
-    dataString += `${data.nickName}`;
-    dataString += ` ${data.bombsAmount}`;
-    dataString += ` ${data.rows}`;
-    dataString += ` ${data.columns}`;
+    settingsString += `${settings.nickName}`;
+    settingsString += ` ${settings.bombsAmount}`;
+    settingsString += ` ${settings.rows}`;
+    settingsString += ` ${settings.columns}`;
 
-    sessionStorage.setItem('data', dataString);
+    sessionStorage.setItem('settings', settingsString);
+  }
+
+  _getSettingsFromSessionStorage() {
+    const split = sessionStorage.getItem('settings').split(' ');
+
+    const settings = {
+      nickName: split[0],
+      bombsAmount: +split[1],
+      rows: +split[2],
+      columns: +split[3]
+    }
+
+    return settings;
   }
 
   _restartTimer() {

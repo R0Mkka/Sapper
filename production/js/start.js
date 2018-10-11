@@ -17,7 +17,7 @@ function start() {
   const modal = new Modal();
   const timer = new Timer();
 
-  showModal(modal);
+  showStartModal(modal);
   setModalFieldsCheckers();
 
   const startButton = document.querySelector(selectors.start);
@@ -27,10 +27,11 @@ function start() {
   buttonsController.menuToggle(menuButton);
 
   Smile.set();
+
   setMenuButtons(playField, buttonsController);
 }
 
-function showModal(modal) {
+function showStartModal(modal) {
   modal.setSettings(startModalSettings);
   modal.tune();
   modal.show();

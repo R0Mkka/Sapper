@@ -3,7 +3,7 @@ export default class Timer {
   constructor() {
     Timer.timerMinutes = document.querySelector('.timer .timer__minutes');
     Timer.timerSeconds = document.querySelector('.timer .timer__seconds');
-    
+
     Timer.timerId = null;
   }
 
@@ -17,24 +17,36 @@ export default class Timer {
       if (seconds == 60) {
         minutes++;
 
-        if (minutes < 10) {
-          minutes = '0' + minutes;
-        }
+        minutes = Timer._correctMinutes(minutes);
 
         seconds = 0;
       }
 
-      const update = () => {
-        if (seconds < 10) {
-          seconds = '0' + seconds;
-        }
-
-        Timer.timerSeconds.innerHTML = seconds;
-        Timer.timerMinutes.innerHTML = minutes;
-      }
-
-      update();
+      Timer._updateTime(minutes, seconds);
     }, 1000);
+  }
+
+  static _correctMinutes(minutes) {
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+
+    return minutes;
+  }
+
+  static _updateTime(minutes, seconds) {
+    seconds = Timer._correctSeconds(seconds);
+
+    Timer.timerSeconds.innerHTML = seconds;
+    Timer.timerMinutes.innerHTML = minutes;
+  }
+
+  static _correctSeconds(seconds) {
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
+
+    return seconds;
   }
 
   static stop() {

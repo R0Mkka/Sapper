@@ -92,34 +92,54 @@ export default class OtherFunctions {
   getBombsNumber(i, j, positions, rows, columns) {
     let bombsAmount = 0;
 
-    if (i + 1 < rows && isBomb(positions[i+1][j]))
-      bombsAmount++;
+    // Это лучшее, что я придумал для того, чтобы сократить код..
+    if (this._cellExists(i + 1, j, positions)) {
+      bombsAmount += this._bombCheck(positions[i + 1][j]);
+    }
 
-    if (i - 1 >= 0 && isBomb(positions[i-1][j]))
-      bombsAmount++;
+    if (this._cellExists(i - 1, j, positions)) {
+      bombsAmount += this._bombCheck(positions[i - 1][j]);
+    }
 
-    if (j + 1 < columns && isBomb(positions[i][j+1]))
-      bombsAmount++;
+    if (this._cellExists(i, j + 1, positions)) {
+      bombsAmount += this._bombCheck(positions[i][j + 1]);
+    }
 
-    if (j - 1 >= 0 && isBomb(positions[i][j-1]))
-      bombsAmount++;
+    if (this._cellExists(i, j - 1, positions)) {
+      bombsAmount += this._bombCheck(positions[i][j - 1]);
+    }
 
-    if (i + 1 < rows && j + 1 < columns && isBomb(positions[i+1][j+1]))
-      bombsAmount++;
+    if (this._cellExists(i + 1, j + 1, positions)) {
+      bombsAmount += this._bombCheck(positions[i + 1][j + 1]);
+    }
 
-    if (i + 1 < rows && j - 1 >= 0 && isBomb(positions[i+1][j-1]))
-      bombsAmount++;
+    if (this._cellExists(i + 1, j - 1, positions)) {
+      bombsAmount += this._bombCheck(positions[i + 1][j - 1]);
+    }
 
-    if (i - 1 >= 0 && j + 1 < columns && isBomb(positions[i-1][j+1]))
-      bombsAmount++;
+    if (this._cellExists(i - 1, j + 1, positions)) {
+      bombsAmount += this._bombCheck(positions[i - 1][j + 1]);
+    }
 
-    if (i - 1 >= 0 && j - 1 >= 0 && isBomb(positions[i-1][j-1]))
-      bombsAmount++;
-
-    function isBomb(elem) {
-      return (elem.classList.contains(classes.bomb));
+    if (this._cellExists(i - 1, j - 1, positions)) {
+      bombsAmount += this._bombCheck(positions[i - 1][j - 1]);
     }
 
     return bombsAmount;
+  }
+
+  _cellExists(i, j, positions) {
+    try {
+      positions[i][j].className;
+
+      return true;
+    } catch(error) {
+
+      return false;
+    }
+  }
+
+  _bombCheck(elem) {
+    return elem.classList.contains(classes.bomb);
   }
 }

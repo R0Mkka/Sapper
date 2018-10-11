@@ -91,8 +91,7 @@ export default class GameController {
     const bombsAmount = playField.bombs.length;
     const clearCells = this._countClearCellsAmount(playField);
 
-    if (bombsAmount == rightFlagsSet &&
-        clearCells == openedCells) {
+    if (bombsAmount == rightFlagsSet && clearCells == openedCells) {
       this._win(playField);
     }
   }

@@ -21,11 +21,21 @@ export default class Modal {
     this._modal.style.width = this._modalSettings.width;
     this._modal.style.height = this._modalSettings.height;
 
+    this._modal.style.top = this._countTopOffset();
     this._modal.style.left = this._countLeftOffset();
 
     this._modalHeader.innerHTML = this._formHeader();
     this._modalContent.innerHTML = this._formContent();
     this._modalButtons.innerHTML = this._formButtons();
+  }
+
+  _countTopOffset() {
+    const windowHeight = document.documentElement.clientHeight;
+    const modalHeight = this._modalSettings.height;
+
+    const topOffset = (windowHeight / 3) - (parseInt(modalHeight) / 3) + 'px';
+
+    return topOffset;
   }
 
   _countLeftOffset() {
@@ -65,11 +75,21 @@ export default class Modal {
 
     const text = this._modalSettings.content.text;
 
-    for (let i = 0; i < text.length; i++) {
-      resultContent += `<p class="text-line">${text[i]}</p>`;
-    }
+    resultContent += this._formText(text);
 
     return resultContent;
+  }
+
+  _formText(text) {
+    let resultText = '<div class="text">';
+
+    for (let i = 0; i < text.length; i++) {
+      resultText += `<p class="text-line">${text[i]}</p>`;
+    }
+
+    resultText += '</div>';
+
+    return resultText;
   }
 
   _addInput(input) {

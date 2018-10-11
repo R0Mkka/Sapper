@@ -1,11 +1,10 @@
 .modal {
   display: none;
   position: fixed;
-  background-color: #530FAD;
+  background-color: rgba(83, 15, 173, 0.75);
   border-radius: 20px;
   border: 3px solid #9D69D6;
   padding: 10px;
-  top: 20px;
   z-index: 1000;
 }
 
@@ -54,6 +53,7 @@
 }
 
 .modal__content p {
+  margin: 10px 0px;
   min-width: 200px;
   text-align: center;
   background-color: #9D69D6;
@@ -64,8 +64,15 @@
   font-weight: 700;
 }
 
+.modal__content .text {
+  margin: 10px 0px;
+  padding: 10px;
+  background-color: #9D69D6;
+  border-radius: 10px;
+}
+
 .modal__content .text-line {
-  margin: 5px;
+  margin: 0px;
 }
 
 .modal__content input {

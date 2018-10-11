@@ -10,7 +10,7 @@ export const images = {
 
 export const lossModalSettings = {
   width: '500px',
-  height: '260px',
+  height: '280px',
   header: {
     images: [
       './img/demon.png',
@@ -32,7 +32,7 @@ export const lossModalSettings = {
 
 export const winModalSettings = {
   width: '500px',
-  height: '260px',
+  height: '280px',
   header: {
     images: [
       './img/with_tongue.png',

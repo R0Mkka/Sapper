@@ -31,7 +31,7 @@ export const selectors = {
 
 export const resetModalSettings = {
   width: '500px',
-  height: '500px',
+  height: '440px',
   header: {
     images: [
       './img/smiling.png',
